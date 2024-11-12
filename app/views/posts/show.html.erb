@@ -1,0 +1,39 @@
+<h1><%= @post.title %></h1>
+<p><%= @post.body %></p>
+<h3> - <%= @post.username%></h3>
+<h4> Last Updated @ <%= @post.updated_at %></h4>
+
+<%= button_to 'Home', '/', method: :get, class: 'btn btn-danger'%>
+
+<% if @show %>
+    <ul>
+    <li><%= link_to "Edit", edit_post_path(@post) %></li>
+    <li><%= link_to "Delete", post_path(@post), data: {
+                        turbo_method: :delete,
+                        turbo_confirm: "Are you sure?"
+                    } %></li>
+    </ul>
+<% end %>
+
+<h2>Comments</h2>
+<% @post.comments.each do |comment| %>
+  <p>
+    <strong><%= comment.commenter %></strong>: <%= comment.body%>
+  </p>
+<% end %>
+
+
+<h2>Add a comment:</h2>
+<%= form_with model: [@post, @post.comments.build] do |form| %>
+  <p>
+  <%= form.hidden_field :commenter, value: session[:current_user_id]%>
+  <%= form.hidden_field :post_id, value: @post.id %>
+  </p>
+  <p>
+    <%= form.label :body %><br>
+    <%= form.text_area :body %>
+  </p>
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>

@@ -1,0 +1,15 @@
+<h1>Hello, THIS IS THE LOGIN PAGE!</h1>
+
+
+<%= form_with model: @user, url: 'login/create' do |form| %>
+  <div>
+    <%= form.label 'Username:' %><br>
+    <%= form.text_field :username %>
+  </div>
+
+<%# SUBMIT BUTTON SHOULD BE CREATE/LOGIN %>
+
+  <div>
+    <%= form.submit 'Sign Up/Login' %>
+  </div>
+<% end %>
