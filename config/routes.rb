@@ -8,6 +8,8 @@ Rails.application.routes.draw do
     resources :comments
   end
 
+  resources :messages
+  
   get "home/index"
   root 'home#index'  # This sets the root route to the 'index' action in 'HomeController'
 
