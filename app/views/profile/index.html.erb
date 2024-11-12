@@ -1,0 +1,14 @@
+<h1><%= session[:current_user_id] %>'s profile</h1>
+
+<h2>My posts:</h2>
+ <% @posts.each do |post| %>
+   
+    <% if post.username ==  session[:current_user_id] %>
+        <li>
+            <%= link_to post.title, post%>
+        </li>
+    <% end %>
+<% end %>
+<%= button_to 'Home', '/', method: :get, class: 'btn btn-danger'%>
+
+<p>Find me in app/views/profile/index.html.erb</p>

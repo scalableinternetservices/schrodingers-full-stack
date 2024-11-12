@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "/profile", to: "profile#index", as: 'profile'
   get "home/index"
   get "/login", to: "login#index", as: 'login'
   post 'login/create', to: 'login#create', as: 'login_create'
