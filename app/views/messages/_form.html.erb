@@ -1,0 +1,20 @@
+<%= form_with model: @message do |form| %>
+  <div>
+  <%= form.hidden_field :sender, value: session[:current_user_id]%>
+  </div>
+   <div>
+    <%= form.label :receiver %><br>
+    <%= form.text_field :receiver %>
+  </div>
+  <div>
+    <%= form.label :title %><br>
+    <%= form.text_field :title %>
+  </div>
+  <div>
+    <%= form.label :body %><br>
+    <%= form.text_area :body %>
+  </div>
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
