@@ -27,6 +27,11 @@ production:
   primary:
     <<: *default
     database: storage/production.sqlite3
+    database: <%= ENV['RDS_DB_NAME'] %>
+    host: <%= ENV['RDS_HOSTNAME'] %>
+    password: <%= ENV['RDS_PASSWORD'] %>
+    port: <%= ENV['RDS_PORT'] %>
+    username: <%= ENV['RDS_USERNAME'] %>
   cache:
     <<: *default
     database: storage/production_cache.sqlite3
