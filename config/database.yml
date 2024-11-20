@@ -8,9 +8,10 @@ default: &default
   encoding: unicode
   pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
   timeout: 5000
-  host: <%= ENV.fetch("PGHOST") { "db" } %>
-  password: postgres
-  username: postgres
+  host: <%= ENV.fetch("RDS_HOSTNAME") { "db" } %>
+  username: <%= ENV.fetch("RDS_USERNAME") { "postgres" } %>
+  password: <%= ENV.fetch("RDS_PASSWORD") { "postgres" } %>
+  port: <%= ENV.fetch("RDS_PORT") { 5432 } %>
 
 development:
   <<: *default
@@ -19,24 +20,25 @@ development:
 test:
   <<: *default
   database: schrodingers_full_stack_test
-
-production:
-  primary:
-    <<: *default
-    database: <%= ENV['RDS_DB_NAME'] %>
-    host: <%= ENV['RDS_HOSTNAME'] %>
-    password: <%= ENV['RDS_PASSWORD'] %>
-    port: <%= ENV['RDS_PORT'] %>
-    username: <%= ENV['RDS_USERNAME'] %>
-  cache:
-    <<: *default
-    database: schrodingers_full_stack_production_cache
-    migrations_paths: db/cache_migrate
-  queue:
-    <<: *default
-    database: schrodingers_full_stack_production_queue
-    migrations_paths: db/queue_migrate
-  cable:
-    <<: *default
-    database: schrodingers_full_stack_production_cable
-    migrations_paths: db/cable_migrate
+# production:
+#   <<: *default
+#   database: <%= ENV.fetch("RDS_DB_NAME") { "schrodingers_full_stack_production" } %>
+#   primary:
+#     <<: *default
+#     database: <%= ENV['RDS_DB_NAME'] %>
+#     host: <%= ENV['RDS_HOSTNAME'] %>
+#     password: <%= ENV['RDS_PASSWORD'] %>
+#     port: <%= ENV['RDS_PORT'] %>
+#     username: <%= ENV['RDS_USERNAME'] %>
+#   cache:
+#     <<: *default
+#     database: schrodingers_full_stack_production_cache
+#     migrations_paths: db/cache_migrate
+#   queue:
+#     <<: *default
+#     database: schrodingers_full_stack_production_queue
+#     migrations_paths: db/queue_migrate
+#   cable:
+#     <<: *default
+#     database: schrodingers_full_stack_production_cable
+#     migrations_paths: db/cable_migrate
