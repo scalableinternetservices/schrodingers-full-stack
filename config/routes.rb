@@ -10,6 +10,8 @@ Rails.application.routes.draw do
   end
 
   resources :messages
+
+  resources :events
   
   get "home/index"
   root 'home#index'  # This sets the root route to the 'index' action in 'HomeController'
