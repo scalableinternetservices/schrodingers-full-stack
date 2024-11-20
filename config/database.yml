@@ -24,3 +24,7 @@ test:
 production:
   <<: *default
   database: <%= ENV.fetch("RDS_DB_NAME") { "schrodingers_full_stack_production" } %>
+
+production_cable:
+  <<: *default
+  database: <%= ENV.fetch("RDS_DB_NAME") { "schrodingers_full_stack_production" } %>_cable
