@@ -20,25 +20,7 @@ development:
 test:
   <<: *default
   database: schrodingers_full_stack_test
-# production:
-#   <<: *default
-#   database: <%= ENV.fetch("RDS_DB_NAME") { "schrodingers_full_stack_production" } %>
-#   primary:
-#     <<: *default
-#     database: <%= ENV['RDS_DB_NAME'] %>
-#     host: <%= ENV['RDS_HOSTNAME'] %>
-#     password: <%= ENV['RDS_PASSWORD'] %>
-#     port: <%= ENV['RDS_PORT'] %>
-#     username: <%= ENV['RDS_USERNAME'] %>
-#   cache:
-#     <<: *default
-#     database: schrodingers_full_stack_production_cache
-#     migrations_paths: db/cache_migrate
-#   queue:
-#     <<: *default
-#     database: schrodingers_full_stack_production_queue
-#     migrations_paths: db/queue_migrate
-#   cable:
-#     <<: *default
-#     database: schrodingers_full_stack_production_cable
-#     migrations_paths: db/cable_migrate
+
+production:
+  <<: *default
+  database: <%= ENV.fetch("RDS_DB_NAME") { "schrodingers_full_stack_production" } %>
