@@ -26,7 +26,7 @@
 <h2>Add a comment:</h2>
 <%= form_with model: [@post, @post.comments.build] do |form| %>
   <p>
-  <%= form.hidden_field :commenter, value: session[:current_user_id]%>
+  <%= form.hidden_field :commenter, value: session[:current_user_id] || "Anonymous"%>
   <%= form.hidden_field :post_id, value: @post.id %>
   </p>
   <p>

@@ -8,7 +8,7 @@
   </div>
 
   <div>
-  <%= form.hidden_field :username, value: session[:current_user_id]%>
+  <%= form.hidden_field :username, value: session[:current_user_id] || "Anonymous"%>
   </div>
 
   <div>
