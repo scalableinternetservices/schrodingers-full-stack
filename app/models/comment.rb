@@ -1,5 +1,6 @@
 class Comment < ApplicationRecord
   belongs_to :post
+  belongs_to :event
   
   validate :comment_has_no_banned_words
 
