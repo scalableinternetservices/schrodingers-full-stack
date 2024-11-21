@@ -1,7 +1,6 @@
-<% if session[:current_user_id] %>
-  <h1>Welcome <%= session[:current_user_id] %></h1>
-    <%= button_to 'Create a Post', '/posts/new', method: :get, class: 'btn btn-danger'%>
-    <%= button_to 'Send message', '/messages/new', method: :get, class: 'btn btn-danger'%>
+<h1>Welcome <%= session[:current_user_id] %></h1>
+  <%= button_to 'Create a Post', '/posts/new', method: :get, class: 'btn btn-danger'%>
+  <%= button_to 'Send message', '/messages/new', method: :get, class: 'btn btn-danger'%>
 
     <h2>Posts</h2>
     <ul>
@@ -34,8 +33,7 @@
       <% end %>
     </ul>
 
-  <%= button_to 'View my profile', profile_path, method: :get, class: 'btn btn-danger' %>
+<%= button_to 'View my profile', profile_path, method: :get, class: 'btn btn-danger' %>
 
-  <%= button_to 'Logout', logout_path, method: :delete, class: 'btn btn-danger' %>
-<% end %>
+<%= button_to 'Logout', logout_path, method: :delete, class: 'btn btn-danger' %>
 
