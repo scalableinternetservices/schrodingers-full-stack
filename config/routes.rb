@@ -11,7 +11,9 @@ Rails.application.routes.draw do
   resources :saved_events,  param: :event_id, only: [:create, :destroy]
   resources :messages
 
-  resources :events
+  resources :events do 
+    resources :comments
+  end
   
   get "home/index"
   root 'home#index'  # This sets the root route to the 'index' action in 'HomeController'
