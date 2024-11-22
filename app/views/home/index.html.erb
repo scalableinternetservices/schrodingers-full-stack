@@ -2,26 +2,37 @@
   <%= button_to 'Create a Post', '/posts/new', method: :get, class: 'btn btn-danger'%>
   <%= button_to 'Send message', '/messages/new', method: :get, class: 'btn btn-danger'%>
 
-  <h2>Posts</h2>
-  <ul>
-  <% @posts.each do |post| %>
-    <li>
-      <%= link_to post.title, post%>
-    </li>
-  <% end %>
-  </ul>
-  <h2>Messages</h2>
+    <h2>Posts</h2>
     <ul>
-    <% @messages.each do |message| %>
-      <% if message.receiver == session[:current_user_id] %>
+    <% @posts.each do |post| %>
       <li>
-        Sender: <%= message.sender %> <br>
-        Title: <%= message.title %> <br>
-        Body: <%= message.body %> <br>
-      </li> <br>
-        <% end %>
+        <%= link_to post.title, post%>
+      </li>
     <% end %>
-  </ul>
+    </ul>
+
+    <h2>Events</h2>
+    <%= button_to 'Create Event', new_event_path, method: :get, class: 'btn btn-danger' %>
+    <ul>
+    <% @events.each do |event| %>
+      <li>
+        <%= link_to event.title, event%>
+      </li>
+    <% end %>
+    </ul>
+
+    <h2>Messages</h2>
+     <ul>
+      <% @messages.each do |message| %>
+        <% if message.receiver == session[:current_user_id] %>
+        <li>
+          Sender: <%= message.sender %> <br>
+          Title: <%= message.title %> <br>
+          Body: <%= message.body %> <br>
+        </li> <br>
+         <% end %>
+      <% end %>
+    </ul>
 
 <%= button_to 'View my profile', profile_path, method: :get, class: 'btn btn-danger' %>
 

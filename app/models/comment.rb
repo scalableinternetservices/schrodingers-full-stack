@@ -1,5 +1,5 @@
 class Comment < ApplicationRecord
-  belongs_to :post
+  belongs_to :commentable, polymorphic: true
   
   validate :comment_has_no_banned_words
 
