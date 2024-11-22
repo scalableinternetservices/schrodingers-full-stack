@@ -1,6 +1,28 @@
 <h1><%= @event.title %></h1>
 <p><%= @event.description %></p>
+<p>At <%= @event.time %></p>
+<h2>Comments</h2>
+<% @event.comments.each do |comment| %>
+  <p>
+    <strong><%= comment.commenter %></strong>: <%= comment.body%>
+  </p>
+<% end %>
 
+
+<h2>Add a comment:</h2>
+<%= form_with model: [@event, @event.comments.build] do |form| %>
+  <p>
+  <%= form.hidden_field :commenter, value: session[:current_user_id] || "Anonymous"%>
+  <%= form.hidden_field :event_id, value: @event.id %>
+  </p>
+  <p>
+    <%= form.label :body %><br>
+    <%= form.text_area :body %>
+  </p>
+  <p>
+    <%= form.submit %>
+  </p>
+<% end %>
 <%= button_to 'Home', '/', method: :get, class: 'btn btn-danger'%>
 
 <ul>
@@ -10,3 +32,4 @@
                         turbo_confirm: "Are you sure?"
                     } %></li>
 </ul>
+

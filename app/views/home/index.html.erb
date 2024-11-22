@@ -12,6 +12,7 @@
     </ul>
 
     <h2>Events</h2>
+    <%= button_to 'Create Event', new_event_path, method: :get, class: 'btn btn-danger' %>
     <ul>
     <% @events.each do |event| %>
       <li>

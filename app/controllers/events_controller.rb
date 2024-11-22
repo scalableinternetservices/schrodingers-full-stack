@@ -41,6 +41,6 @@ class EventsController < ApplicationController
   end
   private
   def event_params
-    params.expect(event: [:title, :description])
+    params.expect(event: [:time, :title, :description])
   end
 end
