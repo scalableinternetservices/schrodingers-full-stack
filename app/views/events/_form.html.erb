@@ -1,4 +1,7 @@
 <%= form_with model: event do |form| %>
+  <label for="meeting-time">Choose a time for your event:</label>
+  <%= form.text_field :time, type: "datetime-local", value: event.time ? event.time.strftime("%Y-%m-%dT%H:%M") : "" %>
+
   <div>
     <%= form.label :title %><br>
     <%= form.text_field :title %>
