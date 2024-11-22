@@ -10,7 +10,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_22_075140) do
+
+ActiveRecord::Schema[8.0].define(version: 2024_11_12_232339) do
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "pg_catalog.plpgsql"
+
   create_table "comments", force: :cascade do |t|
     t.string "commenter"
     t.text "body"
