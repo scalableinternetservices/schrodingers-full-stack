@@ -1,11 +1,18 @@
 <%= form_with model: event do |form| %>
-  <label for="meeting-time">Choose a time for your event:</label>
-  <%= form.text_field :time, type: "datetime-local", value: event.time ? event.time.strftime("%Y-%m-%dT%H:%M") : "" %>
-
-  <div>
+   <div>
     <%= form.label :title %><br>
     <%= form.text_field :title %>
     <% event.errors.full_messages_for(:title).each do |message| %>
+      <div><%= message %></div>
+    <% end %>
+  </div>
+  <label for="meeting-time">Choose a time for your event:</label>
+  <%= form.text_field :time, type: "datetime-local", value: event.time ? event.time.strftime("%Y-%m-%dT%H:%M") : "" %>
+  
+  <div>
+    <%= form.label :location %><br>
+    <%= form.text_field :location %>
+    <% event.errors.full_messages_for(:location).each do |message| %>
       <div><%= message %></div>
     <% end %>
   </div>
