@@ -7,6 +7,7 @@
     <% @posts.each do |post| %>
       <li>
         <%= link_to post.title, post%>
+        comments: <%= post.comments.length %>
       </li>
     <% end %>
     </ul>
@@ -17,6 +18,8 @@
     <% @events.each do |event| %>
       <li>
         <%= link_to event.title, event%>
+        time: <%= event.time %>, location: <%= event.location %>
+
       </li>
     <% end %>
     </ul>
