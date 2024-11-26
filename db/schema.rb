@@ -10,14 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_21_212953) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_26_054950) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
   create_table "comments", force: :cascade do |t|
     t.string "commenter"
     t.text "body"
-    t.bigint "post_id"
     t.bigint "post_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -34,6 +33,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_21_212953) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "username"
+    t.string "time"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -54,18 +54,6 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_21_212953) do
   end
 
   create_table "rsvps", force: :cascade do |t|
-    t.string "host"
-    t.string "user"
-    t.text "response"
-    t.bigint "event_id", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.integer "status"
-    t.index ["event_id"], name: "index_rsvps_on_event_id"
-  end
-
-  create_table "rsvps", force: :cascade do |t|
-    t.string "host"
     t.string "user"
     t.text "response"
     t.bigint "event_id", null: false
@@ -82,6 +70,5 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_21_212953) do
   end
 
   add_foreign_key "comments", "posts"
-  add_foreign_key "rsvps", "events"
   add_foreign_key "rsvps", "events"
 end
