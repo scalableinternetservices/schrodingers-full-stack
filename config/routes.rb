@@ -8,7 +8,7 @@ Rails.application.routes.draw do
   resources :posts do 
     resources :comments
   end
-
+  resources :saved_events,  param: :event_id, only: [:create, :destroy]
   resources :messages
 
   resources :events do 

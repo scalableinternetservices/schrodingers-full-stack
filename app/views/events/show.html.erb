@@ -1,6 +1,8 @@
 <h1><%= @event.title %></h1>
 <p><%= @event.description %></p>
-<p>At <%= @event.time %></p>
+<p>Time: <%= @event.time %></p>
+<p>Location: <%= @event.location %></p>
+
 <h2>Comments</h2>
 <% @event.comments.each do |comment| %>
   <p>
@@ -24,6 +26,7 @@
   </p>
 <% end %>
 <%= button_to 'Home', '/', method: :get, class: 'btn btn-danger'%>
+<%= button_to 'Save Event', saved_events_path(event_id: @event.id), method: :post, class: 'btn btn-success' %>
 
 <ul>
     <li><%= link_to "Edit", edit_event_path(@event) %></li>
