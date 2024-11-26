@@ -30,7 +30,7 @@
 <h2> All RSVPs </h2>
 <% @event.rsvps.each do |rsvp| %>
   <p>
-    <strong><%= rsvp.user %></strong>: <%= rsvp.response%>
+    <strong><%= rsvp.user %></strong>: <%= rsvp.status%>; <%= rsvp.response%>
   </p>
 <% end %>
 
