@@ -1,19 +1,87 @@
-1. Run this after updating the Gemfile: `docker run --rm -v "$PWD":/app -w /app ruby:3.2.2 bundle install`
 
-NOTE for Apple silicon users: export DOCKER_DEFAULT_PLATFORM=linux/amd64
+# Project Setup Instructions
 
-2. build web container: `docker-compose build web`
+## 1. Install Dependencies
+Run this after updating the Gemfile:  
+```bash
+docker run --rm -v "$PWD":/app -w /app ruby:3.2.2 bundle install
+```
 
-3. start db container: `docker-compose up --detach db`
+**NOTE for Apple silicon users:**  
+```bash
+export DOCKER_DEFAULT_PLATFORM=linux/amd64
+```
 
-OPTIONAL: verify container is up: `docker-compose ps`
+## 2. Build and Run Containers
+### Build the Web Container
+```bash
+docker-compose build web
+```
 
-4. create db: `docker-compose run web rails db:create`
+### Start the Database Container
+```bash
+docker-compose up --detach db
+```
 
-5. create schema file: `docker-compose run web rails db:migrate`
+**OPTIONAL:** Verify the container is up:  
+```bash
+docker-compose ps
+```
 
-can be found at (db/schema.rb) if you want to commit it.
+## 3. Setup the Database
+### Create the Database
+```bash
+docker-compose run web rails db:create
+```
 
-6. start dev server: `docker-compose up`
+### Create the Schema File
+```bash
+docker-compose run web rails db:migrate
+```
 
-access using localhost:3000
+The schema file can be found at `db/schema.rb` if you want to commit it.
+
+## 4. Start the Development Server
+```bash
+docker-compose up
+```
+
+Access the application using `http://localhost:3000`.
+
+---
+
+## Possible Changes
+If you encounter permission issues with the database container, you may need to update the `volumes` section in `docker-compose.yml`. Change:
+```yaml
+volumes:
+  - ./tmp/db:/var/lib/postgresql/data
+```
+
+To:
+```yaml
+volumes:
+  - db-data:/var/lib/postgresql/data
+```
+
+This avoids permission issues and aligns with standard practices. Consider whether using `tmp` has specific purposes before making the change.
+
+---
+
+## Additional Commands
+If you encounter issues during migrations, try the following commands:
+
+1. Reset the database and rerun migrations:
+   ```bash
+   docker-compose run web rails db:migrate:reset
+   ```
+
+2. If that doesn’t work, drop and recreate the database:
+   ```bash
+   docker-compose run web rails db:drop
+   docker-compose run web rails db:create
+   ```
+
+3. Then rerun migrations:
+   ```bash
+   docker-compose run web rails db:migrate
+   ```
