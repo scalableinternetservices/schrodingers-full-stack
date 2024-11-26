@@ -12,13 +12,16 @@
   </p>
 
   <p>
-  
+    <%= form.label :status%><br>
+    <%= form.radio_button :status, 'yes' %> Yes
+    <%= form.radio_button :status, 'no' %> No
   </p>
 
   <p>
     <%= form.label :response %><br>
     <%= form.text_area :response %>
   </p>
+
   <p>
     <%= form.submit %>
   </p>
