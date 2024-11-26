@@ -14,7 +14,7 @@
 <h2>Add a comment:</h2>
 <%= form_with model: [@event, @event.comments.build] do |form| %>
   <p>
-  <%= form.hidden_field :commenter, value: session[:current_user_id]%>
+  <%= form.hidden_field :commenter, value: session[:current_user_id] || "Anonymous"%>
   <%= form.hidden_field :event_id, value: @event.id %>
   </p>
   <p>
@@ -35,3 +35,4 @@
                         turbo_confirm: "Are you sure?"
                     } %></li>
 </ul>
+
