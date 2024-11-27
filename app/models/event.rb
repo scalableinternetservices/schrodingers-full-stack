@@ -5,4 +5,5 @@ class Event < ApplicationRecord
   has_many :users, through: :saved_events
   # has_many :comments, dependent: :destroy
   has_many :comments, as: :commentable, dependent: :destroy
+  has_many :rsvps, dependent: :destroy
 end

@@ -11,8 +11,9 @@ Rails.application.routes.draw do
   resources :saved_events,  param: :event_id, only: [:create, :destroy]
   resources :messages
 
-  resources :events do 
+  resources :events do
     resources :comments
+    resources :rsvps
   end
   
   get "home/index"

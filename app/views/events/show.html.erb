@@ -3,6 +3,37 @@
 <p>Time: <%= @event.time %></p>
 <p>Location: <%= @event.location %></p>
 
+
+<h2>RSVP Here</h2>
+<%= form_with model: [@event, @event.rsvps.build] do |form| %>
+  <p>
+  <%= form.hidden_field :user, value: session[:current_user_id] || "Anonymous"%>
+  <%= form.hidden_field :event_id, value: @event.id %>
+  </p>
+
+  <p>
+    <%= form.label :status%><br>
+    <%= form.radio_button :status, 'yes' %> Yes
+    <%= form.radio_button :status, 'no' %> No
+  </p>
+
+  <p>
+    <%= form.label :response %><br>
+    <%= form.text_area :response %>
+  </p>
+
+  <p>
+    <%= form.submit %>
+  </p>
+  <% end %>
+
+<h2> All RSVPs </h2>
+<% @event.rsvps.each do |rsvp| %>
+  <p>
+    <strong><%= rsvp.user %></strong>: <%= rsvp.status%>; <%= rsvp.response%>
+  </p>
+<% end %>
+
 <h2>Comments</h2>
 <% @event.comments.each do |comment| %>
   <p>
@@ -25,6 +56,7 @@
     <%= form.submit %>
   </p>
 <% end %>
+
 <%= button_to 'Home', '/', method: :get, class: 'btn btn-danger'%>
 <%= button_to 'Save Event', saved_events_path(event_id: @event.id), method: :post, class: 'btn btn-success' %>
 
