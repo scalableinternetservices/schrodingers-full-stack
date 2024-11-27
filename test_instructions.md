@@ -1,6 +1,6 @@
 
 # Project Setup Instructions
-## All commands are in rerunConatiner.sh
+
 ## 1. Install Dependencies
 Run this after updating the Gemfile:  
 ```bash

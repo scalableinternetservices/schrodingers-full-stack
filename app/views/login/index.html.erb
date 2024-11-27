@@ -1,36 +1,15 @@
-<h1>LOGIN/SIGNUP PAGE</h1>
-<% if flash[:alert] %>
-  <div class="alert alert-danger">
-    <%= flash[:alert] %>
-  </div>
-<% end %>
-<h2>LOGIN</h2>
-<!-- Login Form -->
-<%= form_with url: login_path, method: :post, local: true do |form| %>
+<h1>Hello, THIS IS THE LOGIN PAGE!</h1>
+
+
+<%= form_with model: @user, url: 'login/create' do |form| %>
   <div>
     <%= form.label 'Username:' %><br>
     <%= form.text_field :username %>
   </div>
+
+<%# SUBMIT BUTTON SHOULD BE CREATE/LOGIN %>
+
   <div>
-    <%= form.label 'Password:' %><br>
-    <%= form.password_field :password %>  <!-- Change to password -->
-  </div>
-  <div>
-    <%= form.submit 'Login' %>
-  </div>
-<% end %>
-<h2>SIGN UP</h2>
-<!-- Sign-Up Form -->
-<%= form_with model: @user, url: signup_path, local: true do |form| %>
-  <div>
-    <%= form.label 'Username:' %><br>
-    <%= form.text_field :username %>
-  </div>
-  <div>
-    <%= form.label 'Password:' %><br>
-    <%= form.password_field :password %>  <!-- Change to password -->
-  </div>
-  <div>
-    <%= form.submit 'Sign Up' %>
+    <%= form.submit 'Sign Up/Login' %>
   </div>
 <% end %>
