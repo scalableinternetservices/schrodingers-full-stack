@@ -1,43 +1,41 @@
 <h1>Welcome <%= session[:current_user_id] %></h1>
-  <%= button_to 'Create a Post', '/posts/new', method: :get, class: 'btn btn-danger'%>
-  <%= button_to 'Send message', '/messages/new', method: :get, class: 'btn btn-danger'%>
+<%= button_to 'Create a Post', '/posts/new', method: :get, class: 'btn btn-danger'%>
+<%= button_to 'Send message', '/messages/new', method: :get, class: 'btn btn-danger'%>
 
-    <h2>Posts</h2>
-    <ul>
-    <% @posts.each do |post| %>
+<h2>Posts</h2>
+<ul>
+  <% @posts.each do |post| %>
+    <li>
+      <%= link_to post.title, post %>
+      comments: <%= post.comments.length %>
+    </li>
+  <% end %>
+</ul>
+
+<h2>Events</h2>
+<%= button_to 'Create Event', new_event_path, method: :get, class: 'btn btn-danger' %>
+<%= button_to 'My Attended Events', events_path, method: :get, class: 'btn btn-primary' %>
+<ul>
+  <% @events.each do |event| %>
+    <li>
+      <%= link_to event.title, event %>
+      time: <%= event.time %>, location: <%= event.location %>
+    </li>
+  <% end %>
+</ul>
+
+<h2>Messages</h2>
+<ul>
+  <% @messages.each do |message| %>
+    <% if message.receiver == session[:current_user_id] %>
       <li>
-        <%= link_to post.title, post%>
-        comments: <%= post.comments.length %>
-      </li>
+        Sender: <%= message.sender %> <br>
+        Title: <%= message.title %> <br>
+        Body: <%= message.body %> <br>
+      </li> <br>
     <% end %>
-    </ul>
-
-    <h2>Events</h2>
-    <%= button_to 'Create Event', new_event_path, method: :get, class: 'btn btn-danger' %>
-    <ul>
-    <% @events.each do |event| %>
-      <li>
-        <%= link_to event.title, event%>
-        time: <%= event.time %>, location: <%= event.location %>
-
-      </li>
-    <% end %>
-    </ul>
-
-    <h2>Messages</h2>
-     <ul>
-      <% @messages.each do |message| %>
-        <% if message.receiver == session[:current_user_id] %>
-        <li>
-          Sender: <%= message.sender %> <br>
-          Title: <%= message.title %> <br>
-          Body: <%= message.body %> <br>
-        </li> <br>
-         <% end %>
-      <% end %>
-    </ul>
+  <% end %>
+</ul>
 
 <%= button_to 'View my profile', profile_path, method: :get, class: 'btn btn-danger' %>
-
 <%= button_to 'Logout', logout_path, method: :delete, class: 'btn btn-danger' %>
-
