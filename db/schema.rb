@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_26_225634) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_26_231114) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -54,6 +54,16 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_26_225634) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "rsvps", force: :cascade do |t|
+    t.string "user"
+    t.text "response"
+    t.bigint "event_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "status"
+    t.index ["event_id"], name: "index_rsvps_on_event_id"
+  end
+
   create_table "saved_events", force: :cascade do |t|
     t.bigint "user_id", null: false
     t.bigint "event_id", null: false
@@ -67,10 +77,10 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_26_225634) do
     t.string "username"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "password_digest"
   end
 
   add_foreign_key "comments", "posts"
+  add_foreign_key "rsvps", "events"
   add_foreign_key "saved_events", "events"
   add_foreign_key "saved_events", "users"
 end
