@@ -18,8 +18,9 @@
     <% @events.each do |event| %>
       <li>
         <%= link_to event.title, event%>
-        time: <%= event.time %>, location: <%= event.location %>
-
+        time: <%= event.time %>, location: <%= event.location %>;
+        <b>Yes</b> RSVPs: <%= event.rsvps.where(status: 'yes').count %>
+        <b>No</b> RSVPs: <%= event.rsvps.where(status: 'no').count %>
       </li>
     <% end %>
     </ul>
