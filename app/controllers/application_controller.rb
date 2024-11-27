@@ -11,7 +11,7 @@ class ApplicationController < ActionController::Base
       if request.path == "/login" || request.path == "/login/create" || request.path == "/signup"
         return
       end
-      redirect_to "/login"  # Redirect to the login page if not logged in 
+      redirect_to "/login"  # Redirect to the login page if not logged in
     end
   end
 end
