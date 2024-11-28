@@ -1,11 +1,9 @@
 class ApplicationController < ActionController::Base
   # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
-  before_action :require_login
-  skip_before_action :require_login, if: :health_check?
+  # before_action :require_login
+  
   allow_browser versions: :modern
-
   private
-
   def require_login
     if session[:current_user_id] && request.path == "/login"
       redirect_to "/" # Home page
@@ -17,11 +15,5 @@ class ApplicationController < ActionController::Base
       end
       redirect_to "/login"  # Redirect to the login page if not logged in
     end
-  end
-
-  def health_check?
-    request.user_agent&.include?('ELB-HealthChecker') || 
-    request.path == '/health' || 
-    request.path == '/health_check'
   end
 end
