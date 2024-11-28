@@ -37,6 +37,11 @@
       <% end %>
     </ul>
 
+    <h2>Invites</h2>
+      <% Invite.where(guest: session[:current_user_id]).includes(:event).each do |invite| %>
+         <%= link_to invite.event.title, event_path(invite.event) %> - <%= invite.note %> <br>
+      <% end %>
+
 <%= button_to 'View my profile', profile_path, method: :get, class: 'btn btn-danger' %>
 
 <%= button_to 'Logout', logout_path, method: :delete, class: 'btn btn-danger' %>
