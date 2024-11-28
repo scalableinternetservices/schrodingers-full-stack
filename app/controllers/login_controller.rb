@@ -1,4 +1,6 @@
 class LoginController < ApplicationController
+  skip_before_action :require_login, only: [:index, :login, :signup]
+
   def index
     if session[:current_user_id]
       redirect_to "/", notice: "You are already logged in."
