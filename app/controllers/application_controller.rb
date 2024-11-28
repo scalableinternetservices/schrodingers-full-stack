@@ -6,12 +6,12 @@ class ApplicationController < ActionController::Base
   private
   def require_login
     unless session[:current_user_id]
-      redirect_to "/login" unless login_path?(request.path)
+      redirect_to login_path unless login_path?(request.path)
     end
   end
 
   private
   def login_path?(path)
-    ["/login", "/login/create", "/signup"].include?(path)
+    [login_path, login_create_path, "/signup"].include?(path)
   end
 end
