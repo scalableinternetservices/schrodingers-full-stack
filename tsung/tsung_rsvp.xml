@@ -6,7 +6,7 @@
   </clients>
 
   <servers>
-    <server host="test.eba-p7hsp2c9.us-west-2.elasticbeanstalk.com" port="443" type="tcp"></server>
+    <server host="test.eba-p7hsp2c9.us-west-2.elasticbeanstalk.com" port="80" type="tcp"></server>
   </servers>
 
   <load>
@@ -45,11 +45,18 @@
   <options>
     <!-- Set connection timeout to 2 seconds -->
     <option name="global_ack_timeout" value="2000"></option>
+    <option name="file_server" id="accounts" value="accounts.csv"/>
   </options>
 
   <sessions>
     <!-- Log in request  -->
     <session name="rsvp" type="ts_http" weight="1">
+      <!-- Get CSV Variables -->
+      <setdynvars sourcetype="file" fileid="accounts" delimiter="," order="iter">
+        <var name="username" />
+        <var name="password" />
+      </setdynvars>
+
       <request><http method="GET" url="/"></http></request>
 
       <request><http method="GET" url="/login"></http></request>
@@ -57,10 +64,10 @@
       <thinktime value="2" random="true"></thinktime>
 
       <!-- Login request -->
-      <request>
-        <http url="/login" version="1.1"
-          contents="username=test&amp;password=test"
-          content_type="application/x-www-form-urlencoded" method="POST">
+      <request subst="true">
+        <http url="/login" version="1.1" 
+              contents="username=%%_username%%&amp;password=%%_password%%"
+              content_type="application/x-www-form-urlencoded;charset=UTF-8" method="POST">
         </http>
       </request>
 
