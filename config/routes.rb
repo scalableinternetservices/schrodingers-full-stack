@@ -1,23 +1,29 @@
 Rails.application.routes.draw do
-  get "/profile", to: "profile#index", as: 'profile'
+  get "/profile", to: "profile#index", as: "profile"
   get "home/index"
-  get "/login", to: "login#index", as: 'login'
-  post 'login/create', to: 'login#create', as: 'login_create'
-  delete 'logout', to: 'login#destroy', as: 'logout'
 
-  resources :posts do 
+  post "/login", to: "login#login", as: "login_login"
+  post "/signup", to: "login#signup"
+
+  get "/login", to: "login#index", as: "login"
+  post "login/create", to: "login#create", as: "login_create"
+
+  delete "logout", to: "login#destroy", as: "logout"
+
+  resources :posts do
     resources :comments
   end
-  resources :saved_events,  param: :event_id, only: [:create, :destroy]
+  resources :saved_events,  param: :event_id, only: [ :create, :destroy ]
   resources :messages
 
   resources :events do
     resources :comments
     resources :rsvps
+    resources :invites
   end
-  
+
   get "home/index"
-  root 'home#index'  # This sets the root route to the 'index' action in 'HomeController'
+  root "home#index"  # This sets the root route to the 'index' action in 'HomeController'
 
 
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html

@@ -18,8 +18,9 @@
     <% @events.each do |event| %>
       <li>
         <%= link_to event.title, event%>
-        time: <%= event.time %>, location: <%= event.location %>
-
+        time: <%= event.time %>, location: <%= event.location %>;
+        <b>Yes</b> RSVPs: <%= event.rsvps.where(status: 'yes').count %>
+        <b>No</b> RSVPs: <%= event.rsvps.where(status: 'no').count %>
       </li>
     <% end %>
     </ul>
@@ -36,6 +37,11 @@
          <% end %>
       <% end %>
     </ul>
+
+    <h2>Invites</h2>
+      <% Invite.where(guest: session[:current_user_id]).includes(:event).each do |invite| %>
+         <%= link_to invite.event.title, event_path(invite.event) %> - <%= invite.note %> <br>
+      <% end %>
 
 <%= button_to 'View my profile', profile_path, method: :get, class: 'btn btn-danger' %>
 
