@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_26_231114) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_28_060431) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -20,10 +20,11 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_26_231114) do
     t.bigint "post_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "event_id"
     t.string "commentable_type"
     t.bigint "commentable_id"
-    t.integer "event_id"
     t.index ["commentable_type", "commentable_id"], name: "index_comments_on_commentable"
+    t.index ["event_id"], name: "index_comments_on_event_id"
     t.index ["post_id"], name: "index_comments_on_post_id"
   end
 
@@ -89,6 +90,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_26_231114) do
     t.string "password_digest"
   end
 
+  add_foreign_key "comments", "events"
   add_foreign_key "comments", "posts"
   add_foreign_key "invites", "events"
   add_foreign_key "rsvps", "events"

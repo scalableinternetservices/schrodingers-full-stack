@@ -7,7 +7,11 @@
     <% end %>
   </div>
   <label for="meeting-time">Choose a time for your event:</label>
+
   <%= form.text_field :time, type: "datetime-local", value: event.time %>
+
+  <%= form.text_field :time, type: "datetime-local", value: 
+  event.time.is_a?(String) ? DateTime.parse(event.time).strftime("%Y-%m-%dT%H:%M") : (event.time ? event.time.strftime("%Y-%m-%dT%H:%M") : "") %>
   
   <div>
     <%= form.hidden_field :username, value:  session[:current_user_id] || "Anonymous"%>

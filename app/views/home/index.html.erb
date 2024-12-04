@@ -25,6 +25,30 @@
     <% end %>
     </ul>
 
+    <h3>Upcoming Events</h3>
+    <ul>
+      <% @events.where('time > ?', Time.now).each do |event| %>
+        <li>
+          <%= link_to event.title, event %>
+          time: <%= DateTime.parse(event.time).strftime("%A, %b %d, %Y at %I:%M %p") %>, location: <%= event.location %>;
+          <b>Yes</b> RSVPs: <%= event.rsvps.where(status: 'yes').count %>
+          <b>No</b> RSVPs: <%= event.rsvps.where(status: 'no').count %>
+        </li>
+      <% end %>
+    </ul>
+
+    <h3>Past Events</h3>
+    <ul>
+      <% @events.where('time < ?', Time.now).each do |event| %>
+        <li>
+          <%= link_to event.title, event %>
+          time: <%= DateTime.parse(event.time).strftime("%A, %b %d, %Y at %I:%M %p") %>, location: <%= event.location %>;
+          <b>Yes</b> RSVPs: <%= event.rsvps.where(status: 'yes').count %>
+          <b>No</b> RSVPs: <%= event.rsvps.where(status: 'no').count %>
+        </li>
+      <% end %>
+    </ul>
+
     <h2>Messages</h2>
      <ul>
       <% @messages.each do |message| %>
