@@ -2,7 +2,6 @@
 
 <h2>My posts:</h2>
  <% @posts.each do |post| %>
-   
     <% if post.username ==  session[:current_user_id] %>
         <li>
             <%= link_to post.title, post%>
@@ -10,8 +9,21 @@
         </li>
     <% end %>
 <% end %>
+
+<h2>My events:</h2>
+ <% @postedEvents.each do |event| %>
+    <% if event.username ==  session[:current_user_id] %>
+        <li>
+            <%= link_to event.title, event%>
+            time: <%= event.time %>, location: <%= event.location %>;
+            <b>Yes</b> RSVPs: <%= event.rsvps.where(status: 'yes').count %>
+            <b>No</b> RSVPs: <%= event.rsvps.where(status: 'no').count %>
+        </li>
+    <% end %>
+<% end %>
+
 <h2>My saved events:</h2>
- <% @events.each do |event| %>
+ <% @savedEvents.each do |event| %>
    
     <li>
         <%= link_to event.title, event%>
