@@ -23,6 +23,11 @@ class EventsController < ApplicationController
 
   def edit
     @event = Event.find(params[:id])
+    if session[:current_user_id] != @event.username
+      @show = false
+    else
+      @show = true
+    end
   end
 
   def update
@@ -36,8 +41,10 @@ class EventsController < ApplicationController
 
   def destroy
     @event = Event.find(params[:id])
-    @event.destroy
-    redirect_to root_path, status: :see_other
+    if session[:current_user_id] == @event.username
+      @event.destroy
+      redirect_to root_path, status: :see_other
+    end
   end
   private
   def event_params
