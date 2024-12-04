@@ -10,6 +10,10 @@
   <%= form.text_field :time, type: "datetime-local", value: event.time ? event.time.strftime("%Y-%m-%dT%H:%M") : "" %>
   
   <div>
+    <%= form.hidden_field :username, value:  session[:current_user_id] || "Anonymous"%>
+  </div>
+
+  <div>
     <%= form.label :location %><br>
     <%= form.text_field :location %>
     <% event.errors.full_messages_for(:location).each do |message| %>
