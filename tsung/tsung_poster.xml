@@ -59,7 +59,7 @@
       <setdynvars sourcetype="file" fileid="attendance" delimiter="\n" order="random">
         <var name="attendance" />
       </setdynvars>
-
+      
       <setdynvars sourcetype="eval" code="fun( {Pid, DynVars} ) ->
         io:format([126, $p, 126, $n, 126, $n], [DynVars]),
         ok end.">
@@ -101,17 +101,15 @@
       </request>
 
       <thinktime value="2" random="true"></thinktime>
-
+            
       <request >
         <http method="GET" url="/"></http>
       </request>
 
       <thinktime value="1" random="true"></thinktime>
       
-      <request subst="true">
-        <http url="/logout" version="1.1" method="POST"
-              contents="_method=delete"
-              content_type="application/x-www-form-urlencoded">
+      <request >
+        <http url="/logout" version="1.1" method="POST">
         </http>
       </request>
     </session>
