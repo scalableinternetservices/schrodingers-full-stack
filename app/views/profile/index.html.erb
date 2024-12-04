@@ -1,26 +1,14 @@
-<h1><%= session[:current_user_id] %>'s profile</h1>
+<h2 class="mt-4">My Saved Events:</h2>
 
-<h2 class="mt-4">My posts:</h2>
-<ul>
- <% @posts.each do |post| %>
-    <% if post.username == session[:current_user_id] %>
-        <li class="post-item">
-            <%= link_to post.title, post, class: 'text-decoration-none' %>
-            <span class=" badge comment-count">comments: <%= post.comments.length %></span>
-        </li>
-    <% end %>
-<% end %>
-</ul>
-
-<h2 class="mt-4">My saved events:</h2>
-<ul>
- <% @events.each do |event| %>
-    <li class="event-item">
-        <%= link_to event.title, event, class: 'text-decoration-none'  %>
+<% if @events.present? %>
+  <ul>
+    <% @events.each do |event| %>
+      <li class="event-item">
+        <%= link_to event.title, event, class: 'text-decoration-none' %>
         <%= button_to 'Remove Event', saved_event_path(event_id: event.id), method: :delete, class: 'btn btn-danger' %>
-    </li>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="text-muted">You have no saved events.</p>
 <% end %>
-</ul>
-
-<%= button_to 'Home', '/', method: :get, class: 'btn btn-success' %>
-
