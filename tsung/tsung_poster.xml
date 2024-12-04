@@ -46,7 +46,6 @@
     <!-- Set connection timeout to 2 seconds -->
     <option name="global_ack_timeout" value="2000"></option>
     <option name="file_server" id="accounts" value="accounts.csv"/>
-    <option name="file_server" id="attendance" value="attendance.txt"/>
   </options>
 
   <sessions>
@@ -54,10 +53,6 @@
       <setdynvars sourcetype="file" fileid="accounts" delimiter="," order="iter">
         <var name="username" />
         <var name="password" />
-      </setdynvars>
-
-      <setdynvars sourcetype="file" fileid="attendance" delimiter="\n" order="random">
-        <var name="attendance" />
       </setdynvars>
       
       <setdynvars sourcetype="eval" code="fun( {Pid, DynVars} ) ->
@@ -88,14 +83,14 @@
       <thinktime value="2" random="true"></thinktime>
 
       <request>
-        <http method="GET" url="/events/1"></http>
+        <http method="GET" url="/posts/new"></http>
       </request>
 
       <thinktime value="4" random="true"></thinktime>
 
       <request subst="true">
-        <http url="/events/1/rsvps" version="1.1" method="POST"
-              contents="rsvp[user]=%%_username%%&amp;rsvp[status]=%%_attendance%%&amp;rsvp[response]=%%_attendance%%&amp;rsvp[event_id]=1"
+        <http url="/posts" version="1.1" method="POST"
+              contents="post[title]=%%test%%&amp;post[username]=%%_username%%&amp;post[body]=%%test%%"
               content_type="application/x-www-form-urlencoded">
         </http>
       </request>
