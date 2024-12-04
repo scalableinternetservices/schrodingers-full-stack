@@ -1,33 +1,33 @@
-<%= form_with model: event do |form| %>
-   <div>
-    <%= form.label :title %><br>
-    <%= form.text_field :title %>
+<%= form_with model: event, html: { class: 'event-form' } do |form| %>
+   <div class="form-group">
+    <%= form.label :title, class: 'form-label' %><br>
+    <%= form.text_field :title, class: 'form-control' %>
     <% event.errors.full_messages_for(:title).each do |message| %>
-      <div><%= message %></div>
+      <div class="error-message"><%= message %></div>
     <% end %>
   </div>
-  <label for="meeting-time">Choose a time for your event:</label>
+  <label for="meeting-time" class="form-label">Choose a time for your event:</label>
   <%= form.text_field :time, type: "datetime-local", value: 
-  event.time.is_a?(String) ? DateTime.parse(event.time).strftime("%Y-%m-%dT%H:%M") : (event.time ? event.time.strftime("%Y-%m-%dT%H:%M") : "") %>
+  event.time.is_a?(String) ? DateTime.parse(event.time).strftime("%Y-%m-%dT%H:%M") : (event.time ? event.time.strftime("%Y-%m-%dT%H:%M") : ""), class: 'form-control' %>
 
   
-  <div>
-    <%= form.label :location %><br>
-    <%= form.text_field :location %>
+  <div class="form-group">
+    <%= form.label :location, class: 'form-label' %><br>
+    <%= form.text_field :location, class: 'form-control' %>
     <% event.errors.full_messages_for(:location).each do |message| %>
-      <div><%= message %></div>
+      <div class="error-message"><%= message %></div>
     <% end %>
   </div>
 
-  <div>
-    <%= form.label :description %><br>
-    <%= form.textarea :description %><br>
+  <div class="form-group">
+    <%= form.label :description, class: 'form-label' %><br>
+    <%= form.textarea :description, class: 'form-control' %><br>
     <% event.errors.full_messages_for(:description).each do |message| %>
-      <div><%= message %></div>
+      <div class="error-message"><%= message %></div>
     <% end %>
   </div>
 
   <div>
-    <%= form.submit %>
+    <%= form.submit class: 'btn btn-primary' %>
   </div>
 <% end %>

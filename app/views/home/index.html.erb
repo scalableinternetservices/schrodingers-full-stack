@@ -1,73 +1,98 @@
-<h1>Welcome <%= session[:current_user_id] %></h1>
-  <%= button_to 'Create a Post', '/posts/new', method: :get, class: 'btn btn-danger'%>
-  <%= button_to 'Send message', '/messages/new', method: :get, class: 'btn btn-danger'%>
+<h1 class="text-center my-4">Welcome <%= session[:current_user_id] %></h1>
 
-    <h2>Posts</h2>
-    <ul>
+<div class="text-center mb-4">
+  <%= button_to 'Create a Post', '/posts/new', method: :get, class: 'btn btn-primary mx-2' %>
+  <%= button_to 'Send Message', '/messages/new', method: :get, class: 'btn btn-primary mx-2' %>
+</div>
+
+<h2 class="mt-4">Posts</h2>
+<div class="event-details">
+  <ul class="list-group mb-4">
     <% @posts.each do |post| %>
-      <li>
-        <%= link_to post.title, post%>
-        comments: <%= post.comments.length %>
+      <li class="list-group-item">
+        <%= link_to post.title, post, class: 'text-decoration-none' %>
+        <span class="badge bg-secondary float-end">Comments: <%= post.comments.length %></span>
       </li>
     <% end %>
-    </ul>
+  </ul>
+</div>
 
-    <h2>Events</h2>
-    <%= button_to 'Create Event', new_event_path, method: :get, class: 'btn btn-danger' %>
-    <ul>
+<h2 class="mt-4">Events</h2>
+<div class="text-center mb-4">
+  <%= button_to 'Create Event', new_event_path, method: :get, class: 'btn btn-primary' %>
+</div>
+
+<div class="event-details">
+  <ul class="list-group mb-4">
     <% @events.each do |event| %>
-      <li>
-        <%= link_to event.title, event%>
-        time: <%= event.time %>, location: <%= event.location %>;
-        <b>Yes</b> RSVPs: <%= event.rsvps.where(status: 'yes').count %>
-        <b>No</b> RSVPs: <%= event.rsvps.where(status: 'no').count %>
+      <li class="list-group-item">
+        <%= link_to event.title, event, class: 'text-decoration-none' %>
+        <div>
+          Time: <%= event.time %>, Location: <%= event.location %>;
+          <b>Yes</b> RSVPs: <%= event.rsvps.where(status: 'yes').count %>,
+          <b>No</b> RSVPs: <%= event.rsvps.where(status: 'no').count %>
+        </div>
       </li>
     <% end %>
-    </ul>
+  </ul>
+</div>
 
-    <h3>Upcoming Events</h3>
-    <ul>
-      <% @events.where('time > ?', Time.now).each do |event| %>
-        <li>
-          <%= link_to event.title, event %>
-          time: <%= DateTime.parse(event.time).strftime("%A, %b %d, %Y at %I:%M %p") %>, location: <%= event.location %>;
-          <b>Yes</b> RSVPs: <%= event.rsvps.where(status: 'yes').count %>
+<h3 class="text-center mb-4">Upcoming Events</h3>
+<div class="event-details">
+  <ul class="list-group mb-4">
+    <% @events.where('time > ?', Time.now).each do |event| %>
+      <li class="list-group-item">
+        <%= link_to event.title, event, class: 'text-decoration-none' %>
+        <div>
+          Time: <%= DateTime.parse(event.time).strftime("%A, %b %d, %Y at %I:%M %p") %>, Location: <%= event.location %>;
+          <b>Yes</b> RSVPs: <%= event.rsvps.where(status: 'yes').count %>,
           <b>No</b> RSVPs: <%= event.rsvps.where(status: 'no').count %>
-        </li>
-      <% end %>
-    </ul>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>
 
-    <h3>Past Events</h3>
-    <ul>
-      <% @events.where('time < ?', Time.now).each do |event| %>
-        <li>
-          <%= link_to event.title, event %>
-          time: <%= DateTime.parse(event.time).strftime("%A, %b %d, %Y at %I:%M %p") %>, location: <%= event.location %>;
-          <b>Yes</b> RSVPs: <%= event.rsvps.where(status: 'yes').count %>
+<h3 class="text-center mb-4">Past Events</h3>
+<div class="event-details">
+  <ul class="list-group mb-4">
+    <% @events.where('time < ?', Time.now).each do |event| %>
+      <li class="list-group-item">
+        <%= link_to event.title, event, class: 'text-decoration-none' %>
+        <div>
+          Time: <%= DateTime.parse(event.time).strftime("%A, %b %d, %Y at %I:%M %p") %>, Location: <%= event.location %>;
+          <b>Yes</b> RSVPs: <%= event.rsvps.where(status: 'yes').count %>,
           <b>No</b> RSVPs: <%= event.rsvps.where(status: 'no').count %>
-        </li>
-      <% end %>
-    </ul>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>
 
-    <h2>Messages</h2>
-     <ul>
-      <% @messages.each do |message| %>
-        <% if message.receiver == session[:current_user_id] %>
-        <li>
-          Sender: <%= message.sender %> <br>
-          Title: <%= message.title %> <br>
-          Body: <%= message.body %> <br>
-        </li> <br>
-         <% end %>
-      <% end %>
-    </ul>
+<h2 class="mt-4">Messages</h2>
+<ul class="list-group mb-4">
+  <% @messages.each do |message| %>
+    <% if message.receiver == session[:current_user_id] %>
+      <li class="list-group-item">
+        <strong>Sender:</strong> <%= message.sender %> <br>
+        <strong>Title:</strong> <%= message.title %> <br>
+        <strong>Body:</strong> <%= message.body %> <br>
+      </li>
+    <% end %>
+  <% end %>
+</ul>
 
-    <h2>Invites</h2>
-      <% Invite.where(guest: session[:current_user_id]).includes(:event).each do |invite| %>
-         <%= link_to invite.event.title, event_path(invite.event) %> - <%= invite.note %> <br>
-      <% end %>
+<h2 class="mt-4">Invites</h2>
+<ul class="list-group mb-4">
+  <% Invite.where(guest: session[:current_user_id]).includes(:event).each do |invite| %>
+    <li class="list-group-item">
+      <%= link_to invite.event.title, event_path(invite.event), class: 'text-decoration-none' %> - <%= invite.note %>
+    </li>
+  <% end %>
+</ul>
 
-<%= button_to 'View my profile', profile_path, method: :get, class: 'btn btn-danger' %>
-
-<%= button_to 'Logout', logout_path, method: :delete, class: 'btn btn-danger' %>
+<div class="text-center mb-4">
+  <%= button_to 'View My Profile', profile_path, method: :get, class: 'btn btn-info mx-2' %>
+  <%= button_to 'Logout', logout_path, method: :delete, class: 'btn btn-danger mx-2' %>
+</div>
 

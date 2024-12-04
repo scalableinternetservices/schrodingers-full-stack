@@ -1,0 +1,50 @@
+.form-label {
+  font-weight: bold;
+  color: #333;
+}
+.form-control {
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 10px;
+  margin-bottom: 1rem;
+}
+.text-danger {
+  color: red;
+  font-size: 0.9em;
+}
+.btn-primary {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+.btn-primary:hover {
+  background-color: #0056b3;
+}
+.body {
+  margin-top: 20px;
+}
+.text-area-body {
+  margin-top: 1rem;
+}
+.mb-3{
+    margin-top: 3px; 
+}
+
+.post-details {
+    margin: 30px auto; /* Center the div horizontally */
+    padding: 40px;
+    border: 1px solid #f4f6f8;
+    border-radius: 8px;
+    background-color: #f6f6f7; /* Light blue background */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px; /* Set a maximum width for better layout */
+    text-align: left; /* Align text to the left */
+}
+
+.text-danger {
+    font-size: 0.9em; /* Slightly smaller font for error messages */
+    color: #dc3545; /* Bootstrap danger color */
+}

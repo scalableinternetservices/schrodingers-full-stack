@@ -1,27 +1,26 @@
 <h1><%= session[:current_user_id] %>'s profile</h1>
 
-<h2>My posts:</h2>
+<h2 class="mt-4">My posts:</h2>
+<ul>
  <% @posts.each do |post| %>
-   
-    <% if post.username ==  session[:current_user_id] %>
-        <li>
-            <%= link_to post.title, post%>
-            comments: <%= post.comments.length %>
+    <% if post.username == session[:current_user_id] %>
+        <li class="post-item">
+            <%= link_to post.title, post, class: 'text-decoration-none' %>
+            <span class=" badge comment-count">comments: <%= post.comments.length %></span>
         </li>
     <% end %>
 <% end %>
-<h2>My saved events:</h2>
+</ul>
+
+<h2 class="mt-4">My saved events:</h2>
+<ul>
  <% @events.each do |event| %>
-   
-    <li>
-        <%= link_to event.title, event%>
+    <li class="event-item">
+        <%= link_to event.title, event, class: 'text-decoration-none'  %>
         <%= button_to 'Remove Event', saved_event_path(event_id: event.id), method: :delete, class: 'btn btn-danger' %>
-
-
     </li>
 <% end %>
+</ul>
 
+<%= button_to 'Home', '/', method: :get, class: 'btn btn-success' %>
 
-<%= button_to 'Home', '/', method: :get, class: 'btn btn-danger'%>
-
-<p>Find me in app/views/profile/index.html.erb</p>
