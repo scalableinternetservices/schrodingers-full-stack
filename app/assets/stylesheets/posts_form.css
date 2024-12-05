@@ -42,6 +42,9 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     max-width: 600px; /* Set a maximum width for better layout */
     text-align: left; /* Align text to the left */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .text-danger {

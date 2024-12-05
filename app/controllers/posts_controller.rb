@@ -1,4 +1,5 @@
 class PostsController < ApplicationController
+  ITEMS_PER_PAGE = 5
   def index
     @posts = Post.all
   end
@@ -41,6 +42,14 @@ class PostsController < ApplicationController
     else
       @show = true
     end
+    @commentsLength = @post.comments.count # Total number of posts
+    @commentPage = params.fetch(:commentPage, 0).to_i
+    @commentPage = 0 if @commentPage < 0
+    @commentPage = [ @commentPage, (@commentsLength / ITEMS_PER_PAGE).floor ].min
+    @comments = @post.comments
+                 .order(created_at: :desc)
+                 .offset(@commentPage * ITEMS_PER_PAGE)
+                 .limit(ITEMS_PER_PAGE)
   end
 
   def destroy
@@ -49,12 +58,10 @@ class PostsController < ApplicationController
       @post.destroy
       redirect_to root_path, status: :see_other
     end
-
   end
 
   private
     def post_params
       params.require(:post).permit(:title, :body, :username)
     end
-
 end

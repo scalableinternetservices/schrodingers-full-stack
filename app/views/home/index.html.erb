@@ -5,19 +5,27 @@
   <%= button_to 'Send Message', '/messages/new', method: :get, class: 'btn btn-primary mx-2' %>
 </div>
 
-<h2 class="mt-4">Posts</h2>
-<div class="event-details">
+<h2 class="text-center mb-4" id="PostsHeader">Posts (<%= @postsLength %>)</h2>
+<div class="post-details">
   <ul class="list-group mb-4">
     <% @posts.each do |post| %>
       <li class="list-group-item">
         <%= link_to post.title, post, class: 'text-decoration-none' %>
-        <span class="badge bg-secondary float-end">Comments: <%= post.comments.length %></span>
+        <div>
+          <%= post.created_at.strftime("%A, %b %d, %Y at %I:%M %p") %> | <%= post.body %>
+        </div>
       </li>
     <% end %>
   </ul>
+  <div>
+    Page <%= @postPage + 1 %> | 
+    <%= link_to "Previous Posts", home_index_path(postPage: @postPage - 1) + "#PostsHeader"  %>
+    |
+    <%= link_to "Next Posts", home_index_path(postPage: @postPage + 1) + "#PostsHeader"  %>
+  </div>
 </div>
 
-<h2 class="mt-4">Events</h2>
+<h2 class="mt-4" id="EventsHeader">Events (<%= @eventsLength %>)</h2>
 <div class="text-center mb-4">
   <%= button_to 'Create Event', new_event_path, method: :get, class: 'btn btn-primary' %>
 </div>
@@ -35,12 +43,40 @@
       </li>
     <% end %>
   </ul>
+  <div>
+  Page <%= @eventPage + 1 %> | 
+  <%= link_to "Previous Events", home_index_path(eventPage: @eventPage - 1) + "#EventsHeader"%>
+    |
+  <%= link_to "Next Events", home_index_path(eventPage: @eventPage + 1) + "#EventsHeader"%>
+  </div>
 </div>
 
-<h3 class="text-center mb-4">Upcoming Events</h3>
+<h3 class="text-center mb-4" id="FutureEventsHeader">Upcoming Events (<%= @futureEventsLength %>)</h3>
 <div class="event-details">
   <ul class="list-group mb-4">
-    <% @events.where('time > ?', Time.now).each do |event| %>
+    <% @futureEvents.each do |event| %>
+      <li class="list-group-item">
+        <%= link_to event.title, event, class: 'text-decoration-none' %>
+        <div>
+          Time: <%= DateTime.parse(event.time).strftime("%A, %b %d, %Y at %I:%M %p") %>, Location: <%= event.location %>;
+          <b>Yes</b> RSVPs: <%= event.rsvps.where(status: 'yes').count %> |
+          <b>No</b> RSVPs: <%= event.rsvps.where(status: 'no').count %>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+  <div>
+    Page <%= @futureEventPage + 1 %> | 
+    <%= link_to "Previous Upcoming Events", home_index_path(futureEventPage: @futureEventPage - 1) + "#FutureEventsHeader" %>
+    |
+    <%= link_to "Next Upcoming Events", home_index_path(futureEventPage: @futureEventPage + 1) + "#FutureEventsHeader"%>
+  </div>
+</div>
+
+<h3 class="text-center mb-4" id="PastEventsHeader">Past Events (<%= @pastEventsLength %>)</h3>
+<div class="event-details">
+  <ul class="list-group mb-4">
+    <% @pastEvents.each do |event| %>
       <li class="list-group-item">
         <%= link_to event.title, event, class: 'text-decoration-none' %>
         <div>
@@ -51,44 +87,43 @@
       </li>
     <% end %>
   </ul>
+    <div>
+    Page <%= @pastEventPage + 1 %> | 
+    <%= link_to "Previous Past Events", home_index_path(pastEventPage: @pastEventPage - 1) + "#PastEventsHeader"%>
+      |
+    <%= link_to "Next Past Events", home_index_path(pastEventPage: @pastEventPage + 1) + "#PastEventsHeader"%>
+    </div>
 </div>
 
-<h3 class="text-center mb-4">Past Events</h3>
-<div class="event-details">
-  <ul class="list-group mb-4">
-    <% @events.where('time < ?', Time.now).each do |event| %>
-      <li class="list-group-item">
-        <%= link_to event.title, event, class: 'text-decoration-none' %>
-        <div>
-          Time: <%= DateTime.parse(event.time).strftime("%A, %b %d, %Y at %I:%M %p") %>, Location: <%= event.location %>;
-          <b>Yes</b> RSVPs: <%= event.rsvps.where(status: 'yes').count %>,
-          <b>No</b> RSVPs: <%= event.rsvps.where(status: 'no').count %>
-        </div>
-      </li>
-    <% end %>
-  </ul>
-</div>
-
-<h2 class="mt-4">Messages</h2>
+<h2 class="mt-4" id="MessagesHeader">Messages (<%= @messagesLength %>) </h2>
 <ul class="list-group mb-4">
   <% @messages.each do |message| %>
-    <% if message.receiver == session[:current_user_id] %>
-      <li class="list-group-item">
-        <strong>Sender:</strong> <%= message.sender %> <br>
-        <strong>Title:</strong> <%= message.title %> <br>
-        <strong>Body:</strong> <%= message.body %> <br>
-      </li>
-    <% end %>
+    <li class="list-group-item">
+      <strong>Sender:</strong> <%= message.sender %> <br>
+      <strong>Title:</strong> <%= message.title %> <br>
+      <strong>Body:</strong> <%= message.body %> <br>
+    </li>
   <% end %>
+  <div>
+  Page <%= @messagePage + 1 %> | 
+  <%= link_to "Previous Messages", home_index_path(messagePage: @messagePage - 1) + "#MessagesHeader"%>
+    |
+  <%= link_to "Next Messages", home_index_path(messagePage: @messagePage + 1) + "#MessagesHeader"%>
+  </div>
 </ul>
 
-<h2 class="mt-4">Invites</h2>
+<h2 class="mt-4" id="InvitesHeader">Invites (<%= @invitesLength %>) </h2>
 <ul class="list-group mb-4">
-  <% Invite.where(guest: session[:current_user_id]).includes(:event).each do |invite| %>
+  <% @invites.each do |invite| %>
     <li class="list-group-item">
       <%= link_to invite.event.title, event_path(invite.event), class: 'text-decoration-none' %> - <%= invite.note %>
     </li>
   <% end %>
+  Page <%= @invitePage + 1 %> | 
+  <%= link_to "Previous Invites", home_index_path(invitePage: @invitePage - 1) + "#InvitesHeader"%>
+    |
+  <%= link_to "Next Invites", home_index_path(invitePage: @invitePage + 1) + "#InvitesHeader"%>
+  </div>
 </ul>
 
 <div class="text-center mb-4">
