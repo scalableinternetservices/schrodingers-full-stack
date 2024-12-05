@@ -12,3 +12,41 @@
 <% else %>
   <p class="text-muted">You have no saved events.</p>
 <% end %>
+
+<h2 class="mt-4">My Posts:</h2>
+<% if @posts.present? %>
+  <div class="event-details">
+    <ul class="list-group mb-4">
+      <% @posts.each do |post| %>
+      <% if post.username == session[:current_user_id] %>
+        <li class="list-group-item">
+          <%= link_to post.title, post, class: 'text-decoration-none' %>
+          <span class="badge bg-secondary float-end">Comments: <%= post.comments.length %></span>
+        </li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<h2 class="mt-4">My Events:</h2>
+<% if @postedEvents.present? %>
+  <div class="event-details">
+    <ul class="list-group mb-4">
+      <% @postedEvents.each do |event| %>
+        <% if event.username == session[:current_user_id] %>
+        <li class="list-group-item">
+          <%= link_to event.title, event, class: 'text-decoration-none' %>
+          <div>
+            Time: <%= event.time %>, Location: <%= event.location %>;
+            <b>Yes</b> RSVPs: <%= event.rsvps.where(status: 'yes').count %>,
+            <b>No</b> RSVPs: <%= event.rsvps.where(status: 'no').count %>
+          </div>
+        </li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= button_to 'Home', '/', method: :get, class: 'btn btn-danger' %>
