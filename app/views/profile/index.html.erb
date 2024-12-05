@@ -34,7 +34,6 @@
   <div class="event-details">
     <ul class="list-group mb-4">
       <% @postedEvents.each do |event| %>
-      <%= event.username %>
         <% if event.username == session[:current_user_id] %>
         <li class="list-group-item">
           <%= link_to event.title, event, class: 'text-decoration-none' %>
