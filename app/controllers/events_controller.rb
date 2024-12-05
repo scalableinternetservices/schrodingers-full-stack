@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   
   def index
-    @events = Event.all
+    @events = Event.includes(:rsvps).includes(:comments).includes(:invites).all
   end
 
   def show
