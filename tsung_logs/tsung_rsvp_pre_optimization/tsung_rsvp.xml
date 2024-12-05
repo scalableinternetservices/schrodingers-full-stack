@@ -98,6 +98,44 @@
       </request>
 
       <thinktime value="1" random="true"/>
+
+      <request>
+        <http method="GET" url="/events/2"/>
+      </request>
+
+      <thinktime value="4" random="true"/>
+
+      <request subst="true">
+        <http url="/events/2/rsvps" version="1.1" method="POST" contents="rsvp[user]=%%_username%%&amp;rsvp[status]=%%_attendance%%&amp;rsvp[response]=%%_attendance%%&amp;rsvp[event_id]=2" content_type="application/x-www-form-urlencoded">
+        </http>
+      </request>
+
+      <thinktime value="2" random="true"/>
+
+      <request>
+        <http method="GET" url="/"/>
+      </request>
+
+      <thinktime value="1" random="true"/>
+
+      <request>
+        <http method="GET" url="/events/3"/>
+      </request>
+
+      <thinktime value="4" random="true"/>
+
+      <request subst="true">
+        <http url="/events/3/rsvps" version="1.1" method="POST" contents="rsvp[user]=%%_username%%&amp;rsvp[status]=%%_attendance%%&amp;rsvp[response]=%%_attendance%%&amp;rsvp[event_id]=3" content_type="application/x-www-form-urlencoded">
+        </http>
+      </request>
+
+      <thinktime value="2" random="true"/>
+      
+      <request>
+        <http method="GET" url="/"/>
+      </request>
+
+      <thinktime value="1" random="true"/>
       
       <request subst="true">
         <http url="/logout" version="1.1" method="DELETE" content_type="application/x-www-form-urlencoded">

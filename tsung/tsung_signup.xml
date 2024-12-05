@@ -96,9 +96,27 @@
 
       <thinktime value="2" random="true"></thinktime>
       
+      <request>
+        <http method="GET" url="/posts/1"></http>
+      </request>
+
+      <thinktime value="2" random="true"></thinktime>
+
+      <request>
+        <http method="GET" url="/"></http>
+      </request>
+
+      <thinktime value="2" random="true"></thinktime>
+
       <!-- View an event -->
       <request>
         <http method="GET" url="/events/1"></http>
+      </request>
+
+      <thinktime value="2" random="true"></thinktime>
+
+      <request>
+        <http method="POST" url="/saved_events?event_id=1"></http>
       </request>
 
       <thinktime value="2" random="true"></thinktime>
@@ -109,7 +127,37 @@
 
       <!-- View a post -->
       <request>
-        <http method="GET" url="/posts/1"></http>
+        <http method="GET" url="/posts/2"></http>
+      </request>
+
+      <thinktime value="2" random="true"></thinktime>
+
+      <request>
+        <http method="GET" url="/"></http>
+      </request>
+
+      <thinktime value="2" random="true"></thinktime>
+      
+      <request>
+        <http method="GET" url="/events/2"></http>
+      </request>
+
+      <thinktime value="2" random="true"></thinktime>
+
+      <request>
+        <http method="POST" url="/saved_events?event_id=2"></http>
+      </request>
+
+      <thinktime value="2" random="true"></thinktime>
+
+      <request>
+        <http method="GET" url="/profile"></http>
+      </request>
+
+      <thinktime value="2" random="true"></thinktime>
+
+      <request>
+        <http method="DELETE" url="/saved_events/2"></http>
       </request>
 
       <thinktime value="2" random="true"></thinktime>

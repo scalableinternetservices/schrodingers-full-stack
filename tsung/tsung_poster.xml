@@ -100,6 +100,45 @@
       <request >
         <http method="GET" url="/"></http>
       </request>
+      
+      <request subst="true">
+        <dyn_variable name="created_post_id" re="[Ll]ocation: http://.*?/posts/(.*)\r"/>
+        <http url="/posts" version="1.1" method="POST"
+              contents="post[title]=post_to_be_deleted&amp;post[username]=%%_username%%&amp;post[body]=test"
+              content_type="application/x-www-form-urlencoded">
+        </http>
+      </request>
+
+      <thinktime value="2" random="true"></thinktime>
+
+      <request subst="true">
+        <http url="/posts/%%_created_post_id%%/edit" method="GET"
+              content_type="application/x-www-form-urlencoded">
+        </http>
+      </request>
+
+      <thinktime value="2" random="true"></thinktime>
+      
+      <request subst="true">
+        <http url="/posts/%%_created_post_id%%" method="PATCH"
+              contents="post[title]=post_to_be_deleted_edited&amp;post[username]=%%_username%%&amp;post[body]=test_edited"
+              content_type="application/x-www-form-urlencoded">
+        </http>
+      </request>
+
+      <thinktime value="2" random="true"></thinktime>
+
+      <request subst="true">
+        <http url="/posts/%%_created_post_id%%" method="DELETE"
+              content_type="application/x-www-form-urlencoded">
+        </http>
+      </request>
+
+      <thinktime value="2" random="true"></thinktime>
+
+      <request >
+        <http method="GET" url="/"></http>
+      </request>
 
       <thinktime value="1" random="true"></thinktime>
       
