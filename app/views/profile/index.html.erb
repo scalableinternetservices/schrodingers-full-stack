@@ -1,27 +1,52 @@
-<h1><%= session[:current_user_id] %>'s profile</h1>
+<h2 class="mt-4">My Saved Events:</h2>
 
-<h2>My posts:</h2>
- <% @posts.each do |post| %>
-   
-    <% if post.username ==  session[:current_user_id] %>
-        <li>
-            <%= link_to post.title, post%>
-            comments: <%= post.comments.length %>
-        </li>
-    <% end %>
-<% end %>
-<h2>My saved events:</h2>
- <% @events.each do |event| %>
-   
-    <li>
-        <%= link_to event.title, event%>
+<% if @events.present? %>
+  <ul>
+    <% @events.each do |event| %>
+      <li class="event-item">
+        <%= link_to event.title, event, class: 'text-decoration-none' %>
         <%= button_to 'Remove Event', saved_event_path(event_id: event.id), method: :delete, class: 'btn btn-danger' %>
-
-
-    </li>
+      </li>
+    <% end %>
+  </ul>
+<% else %>
+  <p class="text-muted">You have no saved events.</p>
 <% end %>
 
+<h2 class="mt-4">My Posts:</h2>
+<% if @posts.present? %>
+  <div class="event-details">
+    <ul class="list-group mb-4">
+      <% @posts.each do |post| %>
+      <% if post.username == session[:current_user_id] %>
+        <li class="list-group-item">
+          <%= link_to post.title, post, class: 'text-decoration-none' %>
+          <span class="badge bg-secondary float-end">Comments: <%= post.comments.length %></span>
+        </li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
 
-<%= button_to 'Home', '/', method: :get, class: 'btn btn-danger'%>
+<h2 class="mt-4">My Events:</h2>
+<% if @postedEvents.present? %>
+  <div class="event-details">
+    <ul class="list-group mb-4">
+      <% @postedEvents.each do |event| %>
+        <% if event.username == session[:current_user_id] %>
+        <li class="list-group-item">
+          <%= link_to event.title, event, class: 'text-decoration-none' %>
+          <div>
+            Time: <%= event.time %>, Location: <%= event.location %>;
+            <b>Yes</b> RSVPs: <%= event.rsvps.where(status: 'yes').count %>,
+            <b>No</b> RSVPs: <%= event.rsvps.where(status: 'no').count %>
+          </div>
+        </li>
+        <% end %>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
 
-<p>Find me in app/views/profile/index.html.erb</p>
+<%= button_to 'Home', '/', method: :get, class: 'btn btn-danger' %>
