@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_26_231114) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_28_060431) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -36,6 +36,15 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_26_231114) do
     t.string "username"
     t.string "time"
     t.string "location"
+  end
+
+  create_table "invites", force: :cascade do |t|
+    t.string "guest"
+    t.text "note"
+    t.bigint "event_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["event_id"], name: "index_invites_on_event_id"
   end
 
   create_table "messages", force: :cascade do |t|
@@ -83,6 +92,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_26_231114) do
 
   add_foreign_key "comments", "events"
   add_foreign_key "comments", "posts"
+  add_foreign_key "invites", "events"
   add_foreign_key "rsvps", "events"
   add_foreign_key "saved_events", "events"
   add_foreign_key "saved_events", "users"

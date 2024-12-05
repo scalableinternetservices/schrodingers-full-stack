@@ -7,8 +7,28 @@
     <% end %>
   </div>
   <label for="meeting-time">Choose a time for your event:</label>
-  <%= form.text_field :time, type: "datetime-local", value: event.time ? event.time.strftime("%Y-%m-%dT%H:%M") : "" %>
+
+
+  <%= form.text_field :time, type: "datetime-local", value: 
+  begin
+    if event.time.nil?
+      ""
+    elsif event.time.is_a?(String)
+      DateTime.parse(event.time).strftime("%Y-%m-%dT%H:%M")
+    elsif event.time.respond_to?(:strftime)
+      event.time.strftime("%Y-%m-%dT%H:%M")
+    else
+      ""
+    end
+  rescue ArgumentError, TypeError
+    ""
+  end 
+%>
   
+  <div>
+    <%= form.hidden_field :username, value:  session[:current_user_id] ||"Anonymous"%>
+  </div>
+
   <div>
     <%= form.label :location %><br>
     <%= form.text_field :location %>
