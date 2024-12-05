@@ -5,6 +5,7 @@
   <p class="event-location">Location: <%= @event.location %></p>
 </div>
 
+
 <h2 class="section-title">Send Invites</h2>
 <%= form_with model: [@event, @event.invites.build], html: { class: 'invite-form' } do |form| %>
   <p>
@@ -85,7 +86,8 @@
 <%= button_to 'Home', '/', method: :get, class: 'btn btn-danger' %>
 <%= button_to 'Save Event', saved_events_path(event_id: @event.id), method: :post, class: 'btn btn-success' %>
 
-<div class="event-actions-container">
+
+<% if @show %>
   <ul class="event-actions">
     <%= link_to "Edit", edit_event_path(@event), class: 'btn btn-success' %>
     <%= link_to "Delete", event_path(@event), data: {
@@ -93,4 +95,4 @@
                         turbo_confirm: "Are you sure?"
                     }, class: 'btn btn-danger' %>
   </ul>
-</div>
+<% end %>

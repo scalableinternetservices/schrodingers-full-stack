@@ -7,13 +7,32 @@
     <% end %>
   </div>
   <label for="meeting-time" class="form-label">Choose a time for your event:</label>
-  <%= form.text_field :time, type: "datetime-local", value: 
-  event.time.is_a?(String) ? DateTime.parse(event.time).strftime("%Y-%m-%dT%H:%M") : (event.time ? event.time.strftime("%Y-%m-%dT%H:%M") : ""), class: 'form-control' %>
 
+
+
+  <%= form.text_field :time, type: "datetime-local", value: 
+  begin
+    if event.time.nil?
+      ""
+    elsif event.time.is_a?(String)
+      DateTime.parse(event.time).strftime("%Y-%m-%dT%H:%M")
+    elsif event.time.respond_to?(:strftime)
+      event.time.strftime("%Y-%m-%dT%H:%M")
+    else
+      ""
+    end
+  rescue ArgumentError, TypeError
+    ""
+  end 
+%>
   
   <div class="form-group">
     <%= form.label :location, class: 'form-label' %><br>
     <%= form.text_field :location, class: 'form-control' %>
+  <div>
+    <%= form.hidden_field :username, value:  session[:current_user_id] ||"Anonymous"%>
+  </div>
+
     <% event.errors.full_messages_for(:location).each do |message| %>
       <div class="error-message"><%= message %></div>
     <% end %>
