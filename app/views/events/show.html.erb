@@ -1,93 +1,98 @@
-<h1><%= @event.title %></h1>
-<p><%= @event.description %></p>
-<p> User: <%=@event.username%></p>
-<p>Time: <%= @event.time %></p>
-<p>Location: <%= @event.location %></p>
+<h1 class="event-title"><%= @event.title %></h1>
+<div class="event-details">
+  <p class="event-description"><%= @event.description %></p>
+  <p class="event-time">Time: <%= @event.time %></p>
+  <p class="event-location">Location: <%= @event.location %></p>
+</div>
 
-<h2>Send Invites</h2>
-<%= form_with model: [@event, @event.invites.build] do |form|%>
+
+<h2 class="section-title">Send Invites</h2>
+<%= form_with model: [@event, @event.invites.build], html: { class: 'invite-form' } do |form| %>
   <p>
   <%= form.hidden_field :event_id, value: @event.id %>
   </p>
 
   <p>
-  <%= form.label :guest%><br>
-  <%= form.text_area :guest%>
+  <%= form.label :guest, class: 'form-label' %><br>
+  <%= form.text_area :guest, class: 'form-textarea' %>
   </p>
 
   <p>
-  <%= form.label :note%><br>
-  <%= form.text_area :note%>
+  <%= form.label :note, class: 'form-label' %><br>
+  <%= form.text_area :note, class: 'form-textarea' %>
   </p>
 
   <p>
-  <%= form.submit %>
+  <%= form.submit class: 'btn btn-primary' %>
   </p>
 <% end %>
 
-<h2>RSVP Here</h2>
-<%= form_with model: [@event, @event.rsvps.build] do |form| %>
+<h2 class="section-title text-center mb-4">RSVP Here</h2>
+<%= form_with model: [@event, @event.rsvps.build], html: { class: 'rsvp-form' } do |form| %>
   <p>
-  <%= form.hidden_field :user, value: session[:current_user_id] || "Anonymous"%>
+  <%= form.hidden_field :user, value: session[:current_user_id] || "Anonymous" %>
   <%= form.hidden_field :event_id, value: @event.id %>
   </p>
 
   <p>
-    <%= form.label :status%><br>
+    <%= form.label :status, class: 'form-label' %><br>
     <%= form.radio_button :status, 'yes' %> Yes
     <%= form.radio_button :status, 'no' %> No
   </p>
 
   <p>
-    <%= form.label :response %><br>
-    <%= form.text_area :response %>
+    <%= form.label :response, class: 'form-label' %><br>
+    <%= form.text_area :response, class: 'form-textarea' %>
   </p>
 
   <p>
-    <%= form.submit %>
+    <%= form.submit class: 'btn btn-primary' %>
   </p>
+<% end %>
+
+<h2 class="section-title">All RSVPs</h2>
+<div class="rsvp-details">
+  <% @event.rsvps.each do |rsvp| %>
+    <p class="rsvp-entry">
+      <strong><%= rsvp.user %></strong>: <%= rsvp.status %>; <%= rsvp.response %>
+    </p>
   <% end %>
+</div>
 
-<h2> All RSVPs </h2>
-<% @event.rsvps.each do |rsvp| %>
+<h2 class="section-title">Comments</h2>
+<div class="comment-details">
+  <% @event.comments.each do |comment| %>
+    <p class="comment-entry">
+      <strong><%= comment.commenter %></strong>: <%= comment.body %>
+    </p>
+  <% end %>
+</div>
+
+<h2 class="section-title">Add a comment:</h2>
+<%= form_with model: [@event, @event.comments.build], html: { class: 'comment-form' } do |form| %>
   <p>
-    <strong><%= rsvp.user %></strong>: <%= rsvp.status%>; <%= rsvp.response%>
-  </p>
-<% end %>
-
-<h2>Comments</h2>
-<% @event.comments.each do |comment| %>
-  <p>
-    <strong><%= comment.commenter %></strong>: <%= comment.body%>
-  </p>
-<% end %>
-
-
-<h2>Add a comment:</h2>
-<%= form_with model: [@event, @event.comments.build] do |form| %>
-  <p>
-  <%= form.hidden_field :commenter, value: session[:current_user_id] || "Anonymous"%>
+  <%= form.hidden_field :commenter, value: session[:current_user_id] || "Anonymous" %>
   <%= form.hidden_field :event_id, value: @event.id %>
   </p>
   <p>
-    <%= form.label :body %><br>
-    <%= form.text_area :body %>
+    <%= form.label :body, class: 'form-label' %><br>
+    <%= form.text_area :body, class: 'form-textarea' %>
   </p>
   <p>
-    <%= form.submit %>
+    <%= form.submit class: 'btn btn-primary' %>
   </p>
 <% end %>
 
-<%= button_to 'Home', '/', method: :get, class: 'btn btn-danger'%>
+<%= button_to 'Home', '/', method: :get, class: 'btn btn-danger' %>
 <%= button_to 'Save Event', saved_events_path(event_id: @event.id), method: :post, class: 'btn btn-success' %>
 
+
 <% if @show %>
-<ul>
-    <li><%= link_to "Edit", edit_event_path(@event) %></li>
-    <li><%= link_to "Delete", event_path(@event), data: {
+  <ul class="event-actions">
+    <%= link_to "Edit", edit_event_path(@event), class: 'btn btn-success' %>
+    <%= link_to "Delete", event_path(@event), data: {
                         turbo_method: :delete,
                         turbo_confirm: "Are you sure?"
-                    } %></li>
-</ul>
+                    }, class: 'btn btn-danger' %>
+  </ul>
 <% end %>
-

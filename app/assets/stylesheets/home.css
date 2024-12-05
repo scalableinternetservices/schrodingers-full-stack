@@ -1,0 +1,181 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f8f9fa; /* Light background for contrast */
+    color: #343a40; /* Dark text for readability */
+}
+
+.text-center {
+    text-align: center;
+}
+
+.my-4 {
+    margin: 2rem 0; /* Increased margin for better spacing */
+}
+
+.mb-4 {
+    margin-bottom: 2rem; /* Increased margin for better spacing */
+}
+
+.mt-4 {
+    margin-top: 2rem; /* Increased margin for better spacing */
+}
+
+.btn {
+    padding: 0.75rem 1.5rem; /* Increased padding for buttons */
+    border-radius: 0.5rem; /* More rounded corners */
+    font-weight: bold; /* Bold text for buttons */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+    margin: 0.5rem; 
+}
+
+.btn-primary {
+    background-color: #007bff;
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #0056b3; /* Darker shade on hover */
+}
+
+.btn-success {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #218838; /* Darker shade on hover */
+}
+
+.btn-info {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.btn-info:hover {
+    background-color: #138496; /* Darker shade on hover */
+}
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #c82333; /* Darker shade on hover */
+}
+
+.list-group-item {
+    padding: 1rem;
+    border: 1px solid #dee2e6; /* Light border for separation */
+    border-radius: 0.5rem; /* Rounded corners */
+    background-color: #ffffff; /* White background for list items */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Deeper shadow for depth */
+    transition: transform 0.2s, background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.list-group-item:hover {
+    transform: scale(1.02); /* Slightly enlarge on hover */
+    background-color: #f1f1f1; /* Light gray background on hover */
+}
+
+.badge {
+    padding: 0.3rem; /* Increased padding for better appearance */
+    border-radius: 1rem; /* Fully rounded badge */
+    background-color: #6c757d; /* Default badge color */
+    color: white;
+    font-size: 0.9rem; /* Slightly smaller font size */
+    transition: background-color 0.3s; /* Smooth transition for hover effect */
+}
+
+.badge:hover {
+    background-color: #5a6268; /* Darker shade on hover */
+}
+
+.float-end {
+    float: right;
+}
+
+.post-title {
+    font-size: 1.5rem; /* Larger font size for post titles */
+    font-weight: bold; /* Bold text for emphasis */
+    color: #007bff; /* Primary color for titles */
+    text-decoration: none; /* Remove underline */
+    transition: color 0.3s, transform 0.3s; /* Smooth color and transform transition on hover */
+    padding: 0.5rem; /* Add padding for better click area */
+    border-radius: 0.25rem; /* Slightly rounded corners */
+}
+
+.post-title:hover {
+    color: #0056b3; /* Darker shade on hover */
+    text-decoration: underline; /* Underline on hover for better interaction */
+    transform: scale(1.05); /* Slightly enlarge on hover for emphasis */
+}
+.text-decoration-none {
+    text-decoration: none; /* Removes underline from links */
+    color: #007bff; /* Sets a default link color */
+    transition: color 0.3s ease; /* Smooth transition for color change */
+}
+
+.text-decoration-none:hover {
+    color: #0056b3; /* Darker color on hover */
+    text-decoration: underline; /* Adds underline on hover for better visibility */
+}
+h2.mt-4 {
+    font-size: 2rem; /* Increase font size */
+    color: #343a40; /* Darker text color */
+    text-align: center; /* Center the heading */
+    margin-top: 1.5rem; /* Adjust top margin */
+    margin-bottom: 1rem; /* Add bottom margin */
+    padding: 0.5rem; /* Add padding for spacing */
+    text-transform: uppercase; /* Make text uppercase */
+    letter-spacing: 1px; /* Add letter spacing for a modern look */
+    transition: color 0.3s ease; /* Smooth transition for color change */
+}
+
+h2.mt-4:hover {
+    color: #007bff; /* Change color on hover */
+}
+
+.list-group {
+    margin: 0; /* Remove default margin */
+    padding: 0; /* Remove default padding */
+}
+
+.post-edit-container {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.edit-title {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 15px;
+}
+
+.no-perms-title {
+    font-size: 20px;
+    color: red;
+    text-align: center;
+}
+
+.event-details {
+    margin: 30px auto; /* Center the div horizontally */
+    padding: 20px;
+    border: 1px solid #007BFF;
+    border-radius: 8px;
+    background-color: #f0f8ff; /* Light blue background */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 600px; /* Set a maximum width for better layout */
+    text-align: left; /* Align text to the left */
+}
+
+.list-group-item {
+    margin-bottom: 10px; /* Space between list items */
+}
+
+.list-group-item div {
+    font-size: 0.9em; /* Slightly smaller font for event details */
+    color: #555; /* Darker color for better readability */
+}
