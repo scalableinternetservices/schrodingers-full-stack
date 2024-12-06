@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<!DOCTYPE tsung SYSTEM "/usr/local/share/tsung/tsung-1.0.dtd" [] >
+<tsung loglevel="notice">
+  <clients>
+    <client host="localhost" maxusers="32768" use_controller_vm="true" />
+  </clients>
+
+  <servers>
+    <server host="test.eba-p7hsp2c9.us-west-2.elasticbeanstalk.com" port="80" type="tcp"></server>
+  </servers>
+
+  <load>
+    <arrivalphase phase="1" duration="5" unit="second">
+      <users arrivalrate="1" unit="second"></users>
+    </arrivalphase>
+    <arrivalphase phase="2" duration="5" unit="second">
+      <users arrivalrate="2" unit="second"></users>
+    </arrivalphase>
+    <arrivalphase phase="3" duration="5" unit="second">
+      <users arrivalrate="4" unit="second"></users>
+    </arrivalphase>
+    <arrivalphase phase="4" duration="5" unit="second">
+      <users arrivalrate="8" unit="second"></users>
+    </arrivalphase>
+    <arrivalphase phase="5" duration="5" unit="second">
+      <users arrivalrate="16" unit="second"></users>
+    </arrivalphase>
+    <arrivalphase phase="6" duration="5" unit="second">
+      <users arrivalrate="32" unit="second"></users>
+    </arrivalphase>
+    <arrivalphase phase="7" duration="5" unit="second">
+      <users arrivalrate="64" unit="second"></users>
+    </arrivalphase>
+    <arrivalphase phase="8" duration="5" unit="second">
+      <users arrivalrate="128" unit="second"></users>
+    </arrivalphase>
+    <arrivalphase phase="9" duration="5" unit="second">
+      <users arrivalrate="256" unit="second"></users>
+    </arrivalphase>
+    <arrivalphase phase="10" duration="5" unit="second">
+      <users arrivalrate="512" unit="second"></users>
+    </arrivalphase>
+  </load>
+
+  <options>
+    <!-- Set connection timeout to 2 seconds -->
+    <option name="global_ack_timeout" value="2000"></option>
+    <option name="file_server" id="accounts" value="accounts.csv"/>
+  </options>
+
+  <sessions>
+    <session name="rsvp" type="ts_http" weight="1">
+      <setdynvars sourcetype="file" fileid="accounts" delimiter="," order="iter">
+        <var name="username" />
+        <var name="password" />
+      </setdynvars>
+      
+      <setdynvars sourcetype="eval" code="fun( {Pid, DynVars} ) ->
+        io:format([126, $p, 126, $n, 126, $n], [DynVars]),
+        ok end.">
+        <var name="dump" />
+      </setdynvars>
+
+      <request>
+        <http method="GET" url="/login"></http>
+      </request>
+
+      <thinktime value="2" random="true"></thinktime>
+
+      <request subst="true">
+        <http url="/login" version="1.1" method="POST"
+              contents="username=%%_username%%&amp;password=%%_password%%"
+              content_type="application/x-www-form-urlencoded">
+        </http>
+      </request>
+
+      <thinktime value="2" random="true"></thinktime>
+
+      <request>
+        <http method="GET" url="/"></http>
+      </request>
+
+      <thinktime value="2" random="true"></thinktime>
+
+      <request>
+        <http method="GET" url="/posts/new"></http>
+      </request>
+
+      <thinktime value="4" random="true"></thinktime>
+
+      <request subst="true">
+        <http url="/posts" version="1.1" method="POST"
+              contents="post[title]=test&amp;post[username]=%%_username%%&amp;post[body]=test"
+              content_type="application/x-www-form-urlencoded">
+        </http>
+      </request>
+
+      <thinktime value="2" random="true"></thinktime>
+            
+      <request >
+        <http method="GET" url="/"></http>
+      </request>
+      
+      <request subst="true">
+        <dyn_variable name="created_post_id" re="[Ll]ocation: http://.*?/posts/(.*)\r"/>
+        <http url="/posts" version="1.1" method="POST"
+              contents="post[title]=post_to_be_deleted&amp;post[username]=%%_username%%&amp;post[body]=test"
+              content_type="application/x-www-form-urlencoded">
+        </http>
+      </request>
+
+      <thinktime value="2" random="true"></thinktime>
+
+      <request subst="true">
+        <http url="/posts/%%_created_post_id%%/edit" method="GET"
+              content_type="application/x-www-form-urlencoded">
+        </http>
+      </request>
+
+      <thinktime value="2" random="true"></thinktime>
+      
+      <request subst="true">
+        <http url="/posts/%%_created_post_id%%" method="PATCH"
+              contents="post[title]=post_to_be_deleted_edited&amp;post[username]=%%_username%%&amp;post[body]=test_edited"
+              content_type="application/x-www-form-urlencoded">
+        </http>
+      </request>
+
+      <thinktime value="2" random="true"></thinktime>
+
+      <request subst="true">
+        <http url="/posts/%%_created_post_id%%" method="DELETE"
+              content_type="application/x-www-form-urlencoded">
+        </http>
+      </request>
+
+      <thinktime value="2" random="true"></thinktime>
+
+      <request >
+        <http method="GET" url="/"></http>
+      </request>
+
+      <thinktime value="1" random="true"></thinktime>
+      
+      <request subst="true">
+        <http url="/logout" version="1.1" method="DELETE">
+        </http>
+      </request>
+    </session>
+  </sessions>
+</tsung>
