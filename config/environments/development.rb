@@ -9,6 +9,12 @@ Rails.application.configure do
   # Do not eager load code on boot.
   config.eager_load = false
 
+  # Turn on fragment caching in view templates.
+  config.action_controller.perform_caching = true
+
+  # use memory store for cache
+  config.cache_store = :memory_store
+
   # Show full error reports.
   config.consider_all_requests_local = true
 

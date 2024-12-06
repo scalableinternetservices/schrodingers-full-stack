@@ -1,14 +1,80 @@
-<h2 class="mt-4">My Saved Events:</h2>
+<h1 class="text-center"><%= session[:current_user_id] %>'s Profile</h1>
 
-<% if @events.present? %>
-  <ul>
-    <% @events.each do |event| %>
-      <li class="event-item">
-        <%= link_to event.title, event, class: 'text-decoration-none' %>
-        <%= button_to 'Remove Event', saved_event_path(event_id: event.id), method: :delete, class: 'btn btn-danger' %>
+<div class="profile-container event-details">
+  <!-- Profile Picture as Avatar -->
+  <div class="profile-avatar">
+    <% if @user&.profile_picture&.attached?   %>
+      <%= image_tag @user.profile_picture, size: "150x150", class: "rounded-circle" %>
+    <% else %>
+    <%= image_tag 'https://media.istockphoto.com/id/1300845620/vector/user-icon-flat-isolated-on-white-background-user-symbol-vector-illustration.jpg?s=612x612&w=0&k=20&c=yBeyba0hUkh14_jgv1OKqIH0CCSWU_4ckRkAoy2p73o=', size: "150x150", class: "rounded-circle" %>
+    <% end %>
+  </div>
+
+  <!-- User Info (Name and Email) -->
+  <div class="profile-info">
+    <h2><%= @user.username %></h2>
+  </div>
+</div>
+
+<!-- Profile Picture Upload Form -->
+<%= form_with model: @user, url: profile_path, method: :patch, local: true, html: { enctype: 'multipart/form-data', id: 'profile-form' } do |form| %>
+    <div class="mt-4 text-center">
+      <%= form.label :profile_picture, "Upload Profile Picture:" %>
+      <%= form.file_field :profile_picture, id: 'profile_picture', onchange: 'validateFileSelection()' %>
+      
+      <div id="file-error-message" class="text-danger" style="display: none;">
+        <p>Please select an image before submitting.</p>
+      </div>
+  
+      <%= form.submit "Update Picture", class: "btn btn-primary mt-2", id: 'submit-btn' %>
+    </div>
+  <% end %>  
+
+<h2 class="mt-4">My posts:</h2>
+<ul>
+  <% @posts.each do |post| %>
+    <% if post.username == session[:current_user_id] %>
+      <li class="post-item">
+        <%= link_to post.title, post, class: 'text-decoration-none' %>
+        <span class="badge comment-count">comments: <%= post.comments.length %></span>
       </li>
     <% end %>
-  </ul>
-<% else %>
-  <p class="text-muted">You have no saved events.</p>
-<% end %>
+  <% end %>
+</ul>
+
+<h2 class="mt-4">My saved events:</h2>
+<ul>
+  <% @events.each do |event| %>
+    <li class="event-item">
+      <%= link_to event.title, event, class: 'text-decoration-none' %>
+      <%= button_to 'Remove Event', saved_event_path(event_id: event.id), method: :delete, class: 'btn btn-danger' %>
+    </li>
+  <% end %>
+</ul>
+
+<%= button_to 'Home', '/', method: :get, class: 'btn btn-success' %>
+
+
+<%= javascript_tag do %>
+    function validateFileSelection() {
+      const fileInput = document.getElementById('profile_picture');
+      const errorMessage = document.getElementById('file-error-message');
+      
+      // If no file is selected, show error message
+      if (!fileInput.value) {
+        errorMessage.style.display = 'block';  // Show error message
+      } else {
+        errorMessage.style.display = 'none';   // Hide error message if a file is selected
+      }
+    }
+  
+    // Optionally, prevent form submission if no file is selected
+    document.getElementById('profile-form').addEventListener('submit', function(event) {
+      const fileInput = document.getElementById('profile_picture');
+      if (!fileInput.value) {
+        event.preventDefault();  // Prevent form submission if no file is selected
+        alert("Please select an image before submitting.");
+      }
+    });
+  <% end %>
+        

@@ -11,6 +11,8 @@ Rails.application.configure do
 
   # Full error reports are disabled.
   config.consider_all_requests_local = false
+  # use memory store for cache
+  config.cache_store = :memory_store
 
   # Turn on fragment caching in view templates.
   config.action_controller.perform_caching = true
