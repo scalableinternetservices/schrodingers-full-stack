@@ -8,10 +8,7 @@
 <% if @show %>
     <ul class="post-actions">
     <li><%= link_to "Edit", edit_post_path(@post), class: 'action-link' %></li>
-    <li><%= link_to "Delete", post_path(@post), data: {
-                        turbo_method: :delete,
-                        turbo_confirm: "Are you sure?"
-                    }, class: 'action-link' %></li>
+    <li><%= button_to "Delete", post_path(@post), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: 'btn btn-danger' %></li>
     </ul>
 <% end %>
 
