@@ -78,6 +78,7 @@
   <%= link_to "Next Comments", event_path(@event, commentPage: @commentPage + 1) + "#CommentsHeader"  %>
 </div>
 
+
 <h2 class="section-title">Add a comment:</h2>
 <%= form_with model: [@event, @event.comments.build], html: { class: 'comment-form' } do |form| %>
   <p>
@@ -101,5 +102,6 @@
   <ul class="event-actions">
     <%= link_to "Edit", edit_event_path(@event), class: 'btn btn-success' %>
     <%= button_to "Delete", event_path(@event), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: 'btn btn-danger' %>
+
   </ul>
 <% end %>
