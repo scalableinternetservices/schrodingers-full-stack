@@ -8,19 +8,22 @@
 <% if @show %>
     <ul class="post-actions">
     <li><%= link_to "Edit", edit_post_path(@post), class: 'action-link' %></li>
-    <li><%= link_to "Delete", post_path(@post), data: {
-                        turbo_method: :delete,
-                        turbo_confirm: "Are you sure?"
-                    }, class: 'action-link' %></li>
+    <li><%= button_to "Delete", post_path(@post), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: 'btn btn-danger' %></li>
     </ul>
 <% end %>
 
-<h2 class="comments-title">Comments</h2>
-<% @post.comments.each do |comment| %>
+<h2 class="comments-title" id="CommentsHeader">Comments (<%= @commentsLength %>)</h2>
+<% @comments.each do |comment| %>
   <p class="comment">
     <strong class="commenter"><%= comment.commenter %></strong>: <%= comment.body%>
   </p>
 <% end %>
+<div>
+  Page <%= @commentPage + 1 %> | 
+  <%= link_to "Previous Comments", post_path(@post, commentPage: @commentPage - 1) + "#CommentsHeader"  %>
+  |
+  <%= link_to "Next Comments", post_path(@post, commentPage: @commentPage + 1) + "#CommentsHeader"  %>
+</div>
 
 <h2 class="add-comment-title">Add a comment:</h2>
 <%= form_with model: [@post, @post.comments.build] do |form| %>
