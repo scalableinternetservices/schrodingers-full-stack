@@ -3,16 +3,17 @@ class ProfileController < ApplicationController
 
   def index
     if !session[:current_user_id]
-      redirect_to '/'
+      redirect_to "/"
     else
+      @user = User.find_by(username: session[:current_user_id])
       @events = @user&.events  # Only the events saved by the current user
       @eventsLength = @events.count # Total number of posts
       @eventPage = params.fetch(:eventPage, 0).to_i
       @eventPage = 0 if @eventPage < 0
       @eventPage = [ @eventPage, (@eventsLength / ITEMS_PER_PAGE).floor ].min
       @events = @events.order(created_at: :desc)
-                   .offset(@eventPage * ITEMS_PER_PAGE)
-                   .limit(ITEMS_PER_PAGE)
+                  .offset(@eventPage * ITEMS_PER_PAGE)
+                  .limit(ITEMS_PER_PAGE)
 
       @postsLength = Post.where(username: session[:current_user_id]).count # Total number of posts
       @postPage = params.fetch(:postPage, 0).to_i
