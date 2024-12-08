@@ -29,28 +29,69 @@
       <%= form.submit "Update Picture", class: "btn btn-primary mt-2", id: 'submit-btn' %>
     </div>
   <% end %>  
+<h2 class="mt-4" id="EventHeader">My Saved Events (<%= @eventsLength %>)</h2>
 
-<h2 class="mt-4">My posts:</h2>
-<ul>
-  <% @posts.each do |post| %>
-    <% if post.username == session[:current_user_id] %>
-      <li class="post-item">
-        <%= link_to post.title, post, class: 'text-decoration-none' %>
-        <span class="badge comment-count">comments: <%= post.comments.length %></span>
+<% if @events.present? %>
+  <ul>
+    <% @events.each do |event| %>
+      <li class="event-item">
+        <%= link_to event.title, event, class: 'text-decoration-none' %>
+        <%= button_to 'Remove Event', saved_event_path(event_id: event.id), method: :delete, class: 'btn btn-danger' %>
       </li>
     <% end %>
-  <% end %>
-</ul>
+  </ul>
+  <div>
+    Page <%= @eventPage + 1 %> | 
+    <%= link_to "Previous Events", profile_path(eventPage: @eventPage - 1) + "#EventHeader"  %>
+    |
+    <%= link_to "Next Events", profile_path(eventPage: @eventPage + 1) + "#EventHeader"  %>
+  </div>
+<% else %>
+  <p class="text-muted">You have no saved events.</p>
+<% end %>
+  
+<h2 class="mt-4" id="PostsHeader">My Posts (<%= @postsLength %>)</h2>
+<% if @posts.present? %>
+  <div class="event-details">
+    <ul class="list-group mb-4">
+      <% @posts.each do |post| %>
+        <li class="list-group-item">
+          <%= link_to post.title, post, class: 'text-decoration-none' %>
+          <span class="badge bg-secondary float-end">Comments: <%= post.comments.length %></span>
+        </li>
+        <% end %>
+    </ul>
+    <div>
+    Page <%= @postPage + 1 %> | 
+    <%= link_to "Previous Posts", profile_path(postPage: @postPage - 1) + "#PostsHeader"  %>
+    |
+    <%= link_to "Next Posts", profile_path(postPage: @postPage + 1) + "#PostsHeader"  %>
+  </div>
+  </div>
+<% end %>
+<h2 class="mt-4" id="PostedEventHeader">My Events (<%= @postedEventsLength %>)</h2>
+<% if @postedEvents.present? %>
+  <div class="event-details">
+    <ul class="list-group mb-4">
+      <% @postedEvents.each do |event| %>
+        <li class="list-group-item">
+          <%= event.username %>
+          <%= link_to event.title, event, class: 'text-decoration-none' %>
+          <div>
+            Time: <%= event.time %>, Location: <%= event.location %>;
+            <b>Yes</b> RSVPs: <%= event.rsvps.where(status: 'yes').count %>,
+            <b>No</b> RSVPs: <%= event.rsvps.where(status: 'no').count %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+    <div>
+    Page <%= @postedEventPage + 1 %> | 
+    <%= link_to "Previous Events", profile_path(postedEventPage: @postedEventPage - 1) + "#PostedEventHeader"  %>
+    |
+    <%= link_to "Next Events", profile_path(postedEventPage: @postedEventPage + 1) + "#PostedEventHeader"  %>
+  </div>
 
-<h2 class="mt-4">My saved events:</h2>
-<ul>
-  <% @events.each do |event| %>
-    <li class="event-item">
-      <%= link_to event.title, event, class: 'text-decoration-none' %>
-      <%= button_to 'Remove Event', saved_event_path(event_id: event.id), method: :delete, class: 'btn btn-danger' %>
-    </li>
-  <% end %>
-</ul>
 
 <%= button_to 'Home', '/', method: :get, class: 'btn btn-success' %>
 

@@ -1,8 +1,6 @@
 class ApplicationController < ActionController::Base
   # Prevent CSRF attacks by raising an exception.
   skip_before_action :verify_authenticity_token
-
-  # Only allow modern browsers supporting webp images, web push, badges, import maps, CSS nesting, and CSS :has.
   before_action :require_login
 
   helper_method :current_user
@@ -13,7 +11,7 @@ class ApplicationController < ActionController::Base
   end
 
   def authenticate_user!
-    redirect_to '/' unless current_user
+    redirect_to "/" unless current_user
   end
   private
   def require_login
@@ -24,6 +22,6 @@ class ApplicationController < ActionController::Base
 
   private
   def login_path?(path)
-    [login_path, login_create_path, "/signup"].include?(path)
+    [ login_path, login_create_path, "/signup" ].include?(path)
   end
 end

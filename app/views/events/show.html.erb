@@ -50,23 +50,34 @@
   </p>
 <% end %>
 
-<h2 class="section-title">All RSVPs</h2>
+<h2 class="section-title" id="RSVPsHeader">All RSVPs (<%= @rsvpsLength %>)</h2>
 <div class="rsvp-details">
-  <% @event.rsvps.each do |rsvp| %>
+  <% @rsvps.each do |rsvp| %>
     <p class="rsvp-entry">
       <strong><%= rsvp.user %></strong>: <%= rsvp.status %>; <%= rsvp.response %>
     </p>
   <% end %>
+  <div>
+  Page <%= @rsvpsPage + 1 %> | 
+  <%= link_to "Previous RSVPs", event_path(@event, rsvpsPage: @rsvpsPage - 1) + "#RSVPsHeader"  %>
+  |
+  <%= link_to "Next RSVPs", event_path(@event, rsvpsPage: @rsvpsPage + 1) + "#RSVPsHeader"  %>
+</div>
 </div>
 
-<h2 class="section-title">Comments</h2>
-<div class="comment-details">
-  <% @event.comments.each do |comment| %>
-    <p class="comment-entry">
-      <strong><%= comment.commenter %></strong>: <%= comment.body %>
-    </p>
-  <% end %>
+<h2 class="comments-title" id="CommentsHeader">Comments (<%= @commentsLength %>)</h2>
+<% @comments.each do |comment| %>
+  <p class="comment">
+    <strong class="commenter"><%= comment.commenter %></strong>: <%= comment.body%>
+  </p>
+<% end %>
+<div>
+  Page <%= @commentPage + 1 %> | 
+  <%= link_to "Previous Comments", event_path(@event, commentPage: @commentPage - 1) + "#CommentsHeader"  %>
+  |
+  <%= link_to "Next Comments", event_path(@event, commentPage: @commentPage + 1) + "#CommentsHeader"  %>
 </div>
+
 
 <h2 class="section-title">Add a comment:</h2>
 <%= form_with model: [@event, @event.comments.build], html: { class: 'comment-form' } do |form| %>
@@ -90,9 +101,7 @@
 <% if @show %>
   <ul class="event-actions">
     <%= link_to "Edit", edit_event_path(@event), class: 'btn btn-success' %>
-    <%= link_to "Delete", event_path(@event), data: {
-                        turbo_method: :delete,
-                        turbo_confirm: "Are you sure?"
-                    }, class: 'btn btn-danger' %>
+    <%= button_to "Delete", event_path(@event), method: :delete, data: { turbo_confirm: "Are you sure?" }, class: 'btn btn-danger' %>
+
   </ul>
 <% end %>
