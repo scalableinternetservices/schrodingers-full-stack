@@ -1,5 +1,8 @@
 Rails.application.routes.draw do
-  get "/profile", to: "profile#index", as: "profile"
+  get 'profile', to: 'profile#index', as: 'profile'
+
+# Route for updating the profile (PATCH request)
+  patch 'profile', to: 'profile#update', as: 'update_profile'
   get "home/index"
 
   post "/login", to: "login#login", as: "login_login"
