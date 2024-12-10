@@ -1,38 +1,39 @@
-<h1 class="post-title"><%= @post.title %></h1>
-<p class="post-body"><%= @post.body %></p>
-<strong class="post-username"> - <%= @post.username%></strong>
-<h4 class="post-updated"> Last Updated @ <%= @post.updated_at %></h4>
+<h1><%= @post.title %></h1>
+<p><%= @post.body %></p>
+<strong> - <%= @post.username%></strong>
+<h4> Last Updated @ <%= @post.updated_at %></h4>
 
-<%= button_to 'Home', '/', method: :get, class: 'btn btn-success home-button'%>
+<%= button_to 'Home', '/', method: :get, class: 'btn btn-danger'%>
 
 <% if @show %>
-    <ul class="post-actions">
-    <li><%= link_to "Edit", edit_post_path(@post), class: 'action-link' %></li>
+    <ul>
+    <li><%= link_to "Edit", edit_post_path(@post) %></li>
     <li><%= link_to "Delete", post_path(@post), data: {
                         turbo_method: :delete,
                         turbo_confirm: "Are you sure?"
-                    }, class: 'action-link' %></li>
+                    } %></li>
     </ul>
 <% end %>
 
-<h2 class="comments-title">Comments</h2>
+<h2>Comments</h2>
 <% @post.comments.each do |comment| %>
-  <p class="comment">
-    <strong class="commenter"><%= comment.commenter %></strong>: <%= comment.body%>
+  <p>
+    <strong><%= comment.commenter %></strong>: <%= comment.body%>
   </p>
 <% end %>
 
-<h2 class="add-comment-title">Add a comment:</h2>
+
+<h2>Add a comment:</h2>
 <%= form_with model: [@post, @post.comments.build] do |form| %>
   <p>
   <%= form.hidden_field :commenter, value: session[:current_user_id]%>
   <%= form.hidden_field :post_id, value: @post.id %>
   </p>
   <p>
-    <%= form.label :body, class: 'comment-label' %><br>
-    <%= form.text_area :body, class: 'comment-textarea' %>
+    <%= form.label :body %><br>
+    <%= form.text_area :body %>
   </p>
   <p>
-    <%= form.submit class: 'submit-button' %>
+    <%= form.submit %>
   </p>
 <% end %>

@@ -29,8 +29,8 @@
         <%= link_to event.title, event, class: 'text-decoration-none' %>
         <div>
           Time: <%= event.time %>, Location: <%= event.location %>;
-          <b>Yes</b> RSVPs: <%= event.rsvps.where(status: 'yes').count %>,
-          <b>No</b> RSVPs: <%= event.rsvps.where(status: 'no').count %>
+          <b>Yes</b> RSVPs: <%= event.yes_count %>,
+          <b>No</b> RSVPs: <%= event.no_count %>
         </div>
       </li>
     <% end %>
@@ -45,8 +45,8 @@
         <%= link_to event.title, event, class: 'text-decoration-none' %>
         <div>
           Time: <%= DateTime.parse(event.time).strftime("%A, %b %d, %Y at %I:%M %p") %>, Location: <%= event.location %>;
-          <b>Yes</b> RSVPs: <%= event.rsvps.where(status: 'yes').count %>,
-          <b>No</b> RSVPs: <%= event.rsvps.where(status: 'no').count %>
+          <b>Yes</b> RSVPs: <%= event.yes_count %>,
+          <b>No</b> RSVPs: <%= event.no_count %>
         </div>
       </li>
     <% end %>
@@ -61,8 +61,8 @@
         <%= link_to event.title, event, class: 'text-decoration-none' %>
         <div>
           Time: <%= DateTime.parse(event.time).strftime("%A, %b %d, %Y at %I:%M %p") %>, Location: <%= event.location %>;
-          <b>Yes</b> RSVPs: <%= event.rsvps.where(status: 'yes').count %>,
-          <b>No</b> RSVPs: <%= event.rsvps.where(status: 'no').count %>
+          <b>Yes</b> RSVPs: <%= event.yes_count %>,
+          <b>No</b> RSVPs: <%= event.no_count %>
         </div>
       </li>
     <% end %>

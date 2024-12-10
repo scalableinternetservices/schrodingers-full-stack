@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_28_060431) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_09_091904) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
 
@@ -36,6 +36,9 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_28_060431) do
     t.string "username"
     t.string "time"
     t.string "location"
+    t.integer "rsvps_count"
+    t.integer "yes_rsvps_count"
+    t.integer "no_rsvps_count"
   end
 
   create_table "invites", force: :cascade do |t|

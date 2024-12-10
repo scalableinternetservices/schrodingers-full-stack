@@ -1,7 +1,7 @@
 class EventsController < ApplicationController
   
   def index
-    @events = Event.includes(:rsvps).includes(:comments).includes(:invites).all
+    @events = Event.all
   end
 
   def show
@@ -52,6 +52,7 @@ class EventsController < ApplicationController
       redirect_to root_path, status: :see_other
     end
   end
+
   private
   def event_params
     params.expect(event: [:time, :location, :title, :description, :username])
