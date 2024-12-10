@@ -12,7 +12,7 @@
       <li class="list-group-item">
         <%= link_to post.title, post, class: 'text-decoration-none' %>
         <div>
-          <%= post.created_at.strftime("%A, %b %d, %Y at %I:%M %p") %> | <%= post.body %> |(<% post.comments.length %>) Comments
+          <%= post.created_at.strftime("%A, %b %d, %Y at %I:%M %p") %> | <%= post.body %> | Comments: (<%= post.comments.length %>)
         </div>
       </li>
     <% end %>
