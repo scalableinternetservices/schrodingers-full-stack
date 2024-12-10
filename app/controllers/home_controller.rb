@@ -37,23 +37,35 @@ class HomeController < ApplicationController
     @invitePage = [ @invitePage, (@invitesLength / ITEMS_PER_PAGE).floor ].min
 
     # General Posts (All)
-    @posts = Post.order(created_at: :desc)
+    @posts = Post.includes(:comments).order(created_at: :desc)
                  .offset(@postPage * ITEMS_PER_PAGE)
                  .limit(ITEMS_PER_PAGE)
 
     # General Events (All)
-    @events = Event.order(created_at: :desc)
+    @events = Event.left_joins(:rsvps)
+    .select("events.*, 
+      COUNT(CASE WHEN rsvps.status = 'yes' THEN 1 END) AS yes_count, 
+      COUNT(CASE WHEN rsvps.status = 'no' THEN 1 END) AS no_count")
+    .group('events.id').order(created_at: :desc)
                    .offset(@eventPage * ITEMS_PER_PAGE)
                    .limit(ITEMS_PER_PAGE)
 
     # Future Events
-    @futureEvents = Event.where("time > ?", Time.now)
+    @futureEvents = Event.where("time > ?", Time.now).left_joins(:rsvps)
+    .select("events.*, 
+      COUNT(CASE WHEN rsvps.status = 'yes' THEN 1 END) AS yes_count, 
+      COUNT(CASE WHEN rsvps.status = 'no' THEN 1 END) AS no_count")
+    .group('events.id')
                          .order(created_at: :desc)
                          .offset(@futureEventPage * ITEMS_PER_PAGE)
                          .limit(ITEMS_PER_PAGE)
 
     # Past Events
-    @pastEvents = Event.where("time < ?", Time.now)
+    @pastEvents = Event.where("time < ?", Time.now).left_joins(:rsvps)
+    .select("events.*, 
+      COUNT(CASE WHEN rsvps.status = 'yes' THEN 1 END) AS yes_count, 
+      COUNT(CASE WHEN rsvps.status = 'no' THEN 1 END) AS no_count")
+    .group('events.id')
                        .order(created_at: :desc)
                        .offset(@pastEventPage * ITEMS_PER_PAGE)
                        .limit(ITEMS_PER_PAGE)

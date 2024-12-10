@@ -20,6 +20,7 @@ class ProfileController < ApplicationController
       @postPage = 0 if @postPage < 0
       @postPage = [ @postPage, (@postsLength / ITEMS_PER_PAGE).floor ].min
       @posts = Post.where(username: session[:current_user_id])
+                   .includes(:comments)
                    .order(created_at: :desc)
                    .offset(@postPage * ITEMS_PER_PAGE)
                    .limit(ITEMS_PER_PAGE)
@@ -29,6 +30,11 @@ class ProfileController < ApplicationController
       @postedEventPage = 0 if @postedEventPage < 0
       @postedEventPage = [ @postedEventPage, (@postedEventsLength / ITEMS_PER_PAGE).floor ].min
       @postedEvents = Event.where(username: session[:current_user_id])
+      .left_joins(:rsvps)
+      .select("events.*, 
+        COUNT(CASE WHEN rsvps.status = 'yes' THEN 1 END) AS yes_count, 
+        COUNT(CASE WHEN rsvps.status = 'no' THEN 1 END) AS no_count")
+      .group('events.id')
                    .order(created_at: :desc)
                    .offset(@postedEventPage * ITEMS_PER_PAGE)
                    .limit(ITEMS_PER_PAGE)
