@@ -12,7 +12,7 @@
       <li class="list-group-item">
         <%= link_to post.title, post, class: 'text-decoration-none' %>
         <div>
-          <%= post.created_at.strftime("%A, %b %d, %Y at %I:%M %p") %> | <%= post.body %>
+          <%= post.created_at.strftime("%A, %b %d, %Y at %I:%M %p") %> | <%= post.body %> |(<% post.comments.length %>) Comments
         </div>
       </li>
     <% end %>
@@ -37,8 +37,8 @@
         <%= link_to event.title, event, class: 'text-decoration-none' %>
         <div>
           Time: <%= event.time %>, Location: <%= event.location %>;
-          <b>Yes</b> RSVPs: <%= event.rsvps.where(status: 'yes').count %>,
-          <b>No</b> RSVPs: <%= event.rsvps.where(status: 'no').count %>
+          <b>Yes</b> RSVPs: <%= event.yes_count %>,
+          <b>No</b> RSVPs: <%= event.no_count %>
         </div>
       </li>
     <% end %>
@@ -59,8 +59,8 @@
         <%= link_to event.title, event, class: 'text-decoration-none' %>
         <div>
           Time: <%= DateTime.parse(event.time).strftime("%A, %b %d, %Y at %I:%M %p") %>, Location: <%= event.location %>;
-          <b>Yes</b> RSVPs: <%= event.rsvps.where(status: 'yes').count %> |
-          <b>No</b> RSVPs: <%= event.rsvps.where(status: 'no').count %>
+          <b>Yes</b> RSVPs: <%= event.yes_count %> |
+          <b>No</b> RSVPs: <%= event.no_count %>
         </div>
       </li>
     <% end %>
@@ -81,8 +81,8 @@
         <%= link_to event.title, event, class: 'text-decoration-none' %>
         <div>
           Time: <%= DateTime.parse(event.time).strftime("%A, %b %d, %Y at %I:%M %p") %>, Location: <%= event.location %>;
-          <b>Yes</b> RSVPs: <%= event.rsvps.where(status: 'yes').count %>,
-          <b>No</b> RSVPs: <%= event.rsvps.where(status: 'no').count %>
+          <b>Yes</b> RSVPs: <%= event.yes_count %>,
+          <b>No</b> RSVPs: <%= event.no_count %>
         </div>
       </li>
     <% end %>
